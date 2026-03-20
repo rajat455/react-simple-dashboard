@@ -131,7 +131,6 @@ function App() {
       )
     }
   }), []);
-
   return (
 
     <ThemeProvider themeOptions={ThemeOptions} settings={settings}>
