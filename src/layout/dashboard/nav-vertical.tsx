@@ -159,7 +159,6 @@ export default function NavVertical({ themeOptions }: Props) {
         paddingTop: 2.5,
         paddingBottom: open ? 2 : 2.5,
         position: "relative",
-        zIndex: 1200,
         alignItems: 'center',
         justifyContent: open ? "space-between" : "center"
       }}>
@@ -255,6 +254,7 @@ export default function NavVertical({ themeOptions }: Props) {
           open={open}
           onClose={() => onChangeLayout("mini")}
           variant="temporary"
+          style={{zIndex:open ? 1200 : -1, width:280}}
           PaperProps={{
             sx: {
               width: 280,
