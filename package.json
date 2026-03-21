@@ -1,6 +1,6 @@
 {
   "name": "react-easy-dashboard",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "type": "module",
   "main": "./dist/index.umd.js",
   "module": "./dist/index.es.js",
@@ -28,7 +28,7 @@
     "iconify-icon": "^3.0.2",
     "path": "^0.12.7",
     "react-apexcharts": "^2.0.1",
-    "react-easy-dashboard": "^1.0.1",
+    "react-easy-dashboard": "^1.0.2",
     "swiper": "^12.1.2"
   },
   "peerDependencies": {

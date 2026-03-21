@@ -1,4 +1,4 @@
-# react-simple-dashboard
+# react-easy-dashboard
 ✨ Main Features ->
 
 Customizable Layouts: Vertical, Mini, and Horizontal layout support.
