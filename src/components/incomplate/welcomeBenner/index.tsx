@@ -1,11 +1,14 @@
 import { alpha, Box, Button, Card, Typography } from "@mui/material";
-import Graph1Svg from "../../assets/3d/graph1Svg"
-
-
-export default function WelcomeBanner() {
+import { defaultImages } from "../../../theme/images";
+type url = string
+interface Props {
+    backgroundImage: url
+}
+export default function WelcomeBanner({ backgroundImage }: Props) {
+     backgroundImage =  backgroundImage || defaultImages.backgrounds.welcomeBanner1
     return (
         <Card sx={{
-            backgroundImage: (theme) => `linear-gradient(to right, ${alpha(theme.palette.grey[900], 0.88)} 0%, ${theme.palette.grey[900]} 75%), url(./background/bg1.webp)`,
+            backgroundImage: (theme) => `linear-gradient(to right, ${alpha(theme.palette.grey[900], 0.88)} 0%, ${theme.palette.grey[900]} 75%), url(${backgroundImage})`,
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center center",
@@ -36,7 +39,7 @@ export default function WelcomeBanner() {
                 <Button size='small' sx={{
                     paddingX: 1.5, paddingY: 0.75, borderRadius: (theme) => theme.shape.borderRadius + "px", textTransform: "unset", color: "#fff",
                     "&:hover": {
-                        boxShadow: theme => theme.shadows.primary
+                        boxShadow: theme => theme?.shadows.primary
                     }
                 }} color="primary" variant="contained">
                     Go now
@@ -45,7 +48,7 @@ export default function WelcomeBanner() {
             <Box flex={1}
                 height={240}
             >
-                <Graph1Svg />
+                {/* <Graph1Svg /> */}
             </Box>
         </Card>
     )

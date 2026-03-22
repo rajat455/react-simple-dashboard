@@ -1,4 +1,4 @@
-import { Icons } from "../../theme/icons";
+import { AnalyticsIcon, AppIcon, BankingIcon, BlogIcon, BookingIcon, CalendarIcon, ChatIcon, CourseIcon, EcommerceIcon, FileIcon, FileManagerIcon, InvoiceIcon, JobIcon, MailIcon, OrderIcon, PermissionIcon, ProductIcon, TourIcon, UserIcon } from "../../theme/icons";
 import { NavigationList } from "../../theme/types";
 
 
@@ -7,97 +7,97 @@ export const navConfig: NavigationList[] = [
     {
         href: "/",
         heading: "App",
-        selected:true,
-        icon:Icons.App
+        selected: true,
+        icon: <AppIcon />
     },
     {
         href: "/",
         heading: "Ecommerce",
-        icon:Icons.ecommerce
+        icon: <EcommerceIcon />
     },
     {
         href: "/",
         heading: "Analytics",
-        icon:Icons.analytics
+        icon: <AnalyticsIcon />
     },
     {
         href: "/",
         heading: "Banking",
-        icon:Icons.banking
+        icon: <BankingIcon />
     },
     {
         href: "/",
         heading: "Booking",
-        icon:Icons.booking
+        icon: <BookingIcon />
     },
     {
         href: "/",
         heading: "File",
-        icon:Icons.file
+        icon: <FileIcon />
     },
     {
         href: "/",
         heading: "Course",
-        icon:Icons.course
+        icon: <CourseIcon />
     },
     {
         href: "/",
         heading: "User",
-        icon:Icons.user
+        icon: <UserIcon />
     },
     {
         href: "/",
         heading: "Product",
-        icon:Icons.product
+        icon: <ProductIcon />
     },
     {
         href: "/",
         heading: "Order",
-        icon:Icons.order
+        icon: <OrderIcon />
     },
     {
         href: "/",
         heading: "Invoice",
-        icon:Icons.invoice
+        icon: <InvoiceIcon />
     },
     {
         href: "/",
         heading: "Blog",
-        icon:Icons.blog
+        icon: <BlogIcon />
     },
     {
         href: "/",
         heading: "Job",
-        icon:Icons.job
+        icon: <JobIcon />
     },
     {
         href: "/",
         heading: "Tour",
-        icon:Icons.tour
+        icon: <TourIcon />
     },
     {
         href: "/",
         heading: "File manager",
-        icon:Icons.fileManager
+        icon: <FileManagerIcon />
     },
     {
         href: "/",
         heading: "Mail",
-        icon:Icons.mail
+        icon: <MailIcon />
     },
     {
         href: "/",
         heading: "Chat",
-        icon:Icons.chat
+        icon: <ChatIcon />
     },
     {
         href: "/",
         heading: "Calendar",
-        icon:Icons.calendar
+        icon: <CalendarIcon />
     },
     {
         href: "/",
         heading: "Permission",
-        icon:Icons.permission
+        icon: <PermissionIcon />
     },
 ]

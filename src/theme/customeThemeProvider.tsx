@@ -3,11 +3,30 @@ import { createTheme, ThemeProvider, StyledEngineProvider, alpha, CssBaseline } 
 import { getTypography, getPalette, getCustomShadows, fonts as F, colorPresets as C } from "./themeUtils";
 import { useSettings } from "../context/settingContext";
 import { ThemeOptions } from "./types";
+import "@mui/material/styles";
 
 interface Props {
     children: React.ReactNode;
     themeOptions: ThemeOptions;
 };
+
+declare module '@mui/material/styles'{
+    interface Theme{
+        shadows: string[] &{
+            primary:string;
+            secondary:string;
+            error:string;
+            success:string;
+            info:string;
+            warning:string;
+            dailog:string;
+            card:string;
+            dropDown:string;
+        }
+    }
+}
+
+
 
 export default function CustomeThemeProvider({ children, themeOptions }: Props) {
     const { settings } = useSettings()
@@ -23,7 +42,7 @@ export default function CustomeThemeProvider({ children, themeOptions }: Props) 
             palette,
             typography: getTypography(fontFamily.main, themeFontSize),
             shape: { borderRadius: 8 },
-            shadows: customShadows,
+            shadows : customShadows as any,
             spacing: 8,
         });
 
@@ -111,7 +130,6 @@ export default function CustomeThemeProvider({ children, themeOptions }: Props) 
                     }
                 }
             },
-
         };
 
         return theme;

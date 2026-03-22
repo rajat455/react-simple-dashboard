@@ -1,11 +1,12 @@
-import { Drawer, Stack, Typography, Box, alpha, Button, Chip, Tooltip, Paper, Grid, IconButton, Badge } from '@mui/material';
+import { Drawer, Stack, Typography, Box, alpha, Button, Chip, Tooltip, Paper, Grid, IconButton, Badge, useTheme } from '@mui/material';
 import AntSwitch from '../../components/antSwitch';
 import CustomeSlider from '../../components/customeSlider';
 import { useSettings } from '../../context/settingContext';
 import { colorPresets as C, fonts as F } from '../../theme/themeUtils';
-import { Icons } from '../../theme/icons';
+import { CloseIcon, ColorPresetsIcon, ContrastIcon, FontsIcon, FullScreenIcon, Icons, InfoIcon, Layout1Icon, Layout2Icon, Layout3Icon, NightModeIcon, ResetIcon, RightToLeftIcon, WindowScreenIcon } from '../../theme/icons';
 import { SettingsValueProps, ThemeOptions } from '../../theme/types';
 import { useEffect } from 'react';
+import { defaultImages } from '../../theme/images';
 
 
 interface Props {
@@ -17,6 +18,7 @@ interface Props {
 
 let initialSettings: SettingsValueProps | null = null
 export default function SettingsDrawer({ open, onClose, onChangeSettings, themeOptions }: Props) {
+    const theme = useTheme()
     useEffect(() => {
         if (!initialSettings) initialSettings = settings
     }, [])
@@ -49,10 +51,6 @@ export default function SettingsDrawer({ open, onClose, onChangeSettings, themeO
     }, [settings])
 
 
-
-    const bgEffect1 = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWxsPSJ1cmwoI3BhaW50MF9yYWRpYWxfNDQ2NF81NTMzNykiIGZpbGwtb3BhY2l0eT0iMC4xIi8+CjxkZWZzPgo8cmFkaWFsR3JhZGllbnQgaWQ9InBhaW50MF9yYWRpYWxfNDQ2NF81NTMzNyIgY3g9IjAiIGN5PSIwIiByPSIxIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgZ3JhZGllbnRUcmFuc2Zvcm09InRyYW5zbGF0ZSgwIDEyMCkgcm90YXRlKDEzNSkgc2NhbGUoMTIzLjI1KSI+CjxzdG9wIHN0b3AtY29sb3I9IiNGRjU2MzAiLz4KPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjRkY1NjMwIiBzdG9wLW9wYWNpdHk9IjAiLz4KPC9yYWRpYWxHcmFkaWVudD4KPC9kZWZzPgo8L3N2Zz4K"
-    const bgEffect2 = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWxsPSJ1cmwoI3BhaW50MF9yYWRpYWxfNDQ2NF81NTMzOCkiIGZpbGwtb3BhY2l0eT0iMC4xIi8+CjxkZWZzPgo8cmFkaWFsR3JhZGllbnQgaWQ9InBhaW50MF9yYWRpYWxfNDQ2NF81NTMzOCIgY3g9IjAiIGN5PSIwIiByPSIxIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgZ3JhZGllbnRUcmFuc2Zvcm09InRyYW5zbGF0ZSgxMjAgMS44MTgxMmUtMDUpIHJvdGF0ZSgtNDUpIHNjYWxlKDEyMy4yNSkiPgo8c3RvcCBzdG9wLWNvbG9yPSIjMDBCOEQ5Ii8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzAwQjhEOSIgc3RvcC1vcGFjaXR5PSIwIi8+CjwvcmFkaWFsR3JhZGllbnQ+CjwvZGVmcz4KPC9zdmc+Cg=="
-
     return (
         <Drawer
             anchor={reverseLayout ? "left" : "right"}
@@ -65,7 +63,7 @@ export default function SettingsDrawer({ open, onClose, onChangeSettings, themeO
             }}
             PaperProps={{
                 sx: {
-                    backgroundImage: `url(${bgEffect1}),url(${bgEffect2})`,
+                    backgroundImage: `url(${defaultImages.backgrounds.deemBg1}),url(${defaultImages.backgrounds.deemBg2})`,
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "50%, 50%",
                     padding: 0,
@@ -95,12 +93,12 @@ export default function SettingsDrawer({ open, onClose, onChangeSettings, themeO
                     }} color='error' variant='dot'>
                         <IconButton size="small" onClick={() => {
                             onResetSettings(initialSettings || settings)
-                        }} sx={{ color: 'text.secondary' }}>
-                            {Icons.reset}
+                        }} sx={{fontSize:20, color: 'text.secondary' }}>
+                            <ResetIcon />
                         </IconButton>
                     </Badge>
-                    <IconButton size="small" onClick={onClose} sx={{ color: 'text.secondary' }}>
-                        {Icons.close}
+                    <IconButton size="small" onClick={onClose} sx={{fontSize:20, color: 'text.secondary' }}>
+                        <CloseIcon />
                     </IconButton>
                 </Stack>
             </Stack>
@@ -120,9 +118,9 @@ export default function SettingsDrawer({ open, onClose, onChangeSettings, themeO
                 }}>
 
                 <Stack direction={"row"} spacing={2} mb={2}>
-                    <Button onClick={handelModeChange} variant='outlined' color='secondary' sx={{ py: 2.1, px: 2.3, flex: 1, alignItems: 'start', flexDirection: "column" }}>
+                    <Button  onClick={handelModeChange} variant='outlined' color='secondary' sx={{fontSize:theme.typography.h4, py: 2.1, px: 2.3, flex: 1, alignItems: 'start', flexDirection: "column" }}>
                         <Stack mb={2.7} width={"100%"} alignItems={"center"} direction={"row"} justifyContent={"space-between"}>
-                            {Icons.nightMode}
+                            <NightModeIcon />
                             <AntSwitch color="secondary" checked={themeMode === "dark"} inputProps={{ 'aria-label': 'ant design' }} />
                         </Stack>
                         <Typography variant="caption" >Mode</Typography>
@@ -130,9 +128,9 @@ export default function SettingsDrawer({ open, onClose, onChangeSettings, themeO
                     <Button color='secondary' onClick={() => {
                         toggleContrast()
 
-                    }} variant='outlined' sx={{ py: 2.1, px: 2.3, flex: 1, alignItems: 'start', flexDirection: "column" }}>
+                    }} variant='outlined' sx={{fontSize:theme.typography.h4, py: 2.1, px: 2.3, flex: 1, alignItems: 'start', flexDirection: "column" }}>
                         <Stack mb={2.7} width={"100%"} alignItems={"center"} direction={"row"} justifyContent={"space-between"}>
-                            {Icons.contrast}
+                            <ContrastIcon />
                             <AntSwitch color='secondary' checked={isContrast ? true : false} inputProps={{ 'aria-label': 'ant design' }} />
                         </Stack>
                         <Typography variant="caption" >Contrast</Typography>
@@ -142,9 +140,9 @@ export default function SettingsDrawer({ open, onClose, onChangeSettings, themeO
                     <Button onClick={() => {
                         toggleReverseLayout()
 
-                    }} color='secondary' variant='outlined' sx={{ py: 2.1, px: 2.3, flex: 1, alignItems: 'start', flexDirection: "column" }}>
+                    }} color='secondary' variant='outlined' sx={{fontSize:theme.typography.h4, py: 2.1, px: 2.3, flex: 1, alignItems: 'start', flexDirection: "column" }}>
                         <Stack mb={2.7} width={"100%"} alignItems={"center"} direction={"row"} justifyContent={"space-between"}>
-                            {Icons.rightToLeft}
+                            <RightToLeftIcon />
                             <AntSwitch checked={reverseLayout ? true : false} color='secondary' inputProps={{ 'aria-label': 'ant design' }} />
                         </Stack>
                         <Typography variant="caption" >Right to left</Typography>
@@ -152,10 +150,11 @@ export default function SettingsDrawer({ open, onClose, onChangeSettings, themeO
                     <Button onClick={() => {
                         toggleFullScreen()
                     }} color='secondary' variant='outlined' sx={{
+                        fontSize:theme.typography.h4,
                         py: 2.1, px: 2.3, flex: 1, alignItems: 'start', flexDirection: "column"
                     }}>
                         <Stack mb={2.7} width={"100%"} alignItems={"center"} direction={"row"} justifyContent={"space-between"}>
-                            {!isFullScreen ? Icons.fullScreen : Icons.windowScreen}
+                            {!isFullScreen ? <FullScreenIcon /> : <WindowScreenIcon />}
                             <AntSwitch color='secondary' checked={isFullScreen} inputProps={{ 'aria-label': 'ant design' }} />
                         </Stack>
                         <Typography variant="caption" >{!isFullScreen ? "Full Screen" : "Windowed"}</Typography>
@@ -183,8 +182,8 @@ export default function SettingsDrawer({ open, onClose, onChangeSettings, themeO
                             <Grid size={6} key={x.name}>
                                 <Button variant='outlined' color='secondary' onClick={() => handelFontChange(x.name)} sx={{ flexDirection: 'column', gap: 0.5, paddingY: 2 }} disableRipple={true} fullWidth={true}>
                                     <Stack direction={"column"} alignItems={"center"} justifyContent={"center"} gap={1}>
-                                        <Typography component={"span"} color={x.name === themeFont ? "primary.main" : "text.secondary"}>
-                                            {Icons.fonts}
+                                        <Typography sx={{fontSize:28}} component={"span"} color={x.name === themeFont ? "primary.main" : "text.secondary"}>
+                                            <FontsIcon />
                                         </Typography>
                                         <Typography variant='caption'>{x.name}</Typography>
                                     </Stack>
@@ -222,7 +221,7 @@ export default function SettingsDrawer({ open, onClose, onChangeSettings, themeO
                     borderColor: (theme) => alpha(theme.palette.grey[500], 0.12),
                     background: "transparent",
                 }}  >
-                    <Chip label="Nav" variant='filled' color='secondary' size='small' sx={{ width: "auto", flexDirection: "row-reverse", position: 'absolute', top: "-12px", left: "15px", fontSize: (theme) => theme.typography.caption, fontWeight: 600 }} icon={<Tooltip title="Dashboard only"><span style={{ marginLeft: 0, lineHeight: 0, marginRight: 2 }}>{Icons.info}</span></Tooltip>} />
+                    <Chip label="Nav" variant='filled' color='secondary' size='small' sx={{ width: "auto", flexDirection: "row-reverse", position: 'absolute', top: "-12px", left: "15px", fontSize: (theme) => theme.typography.caption, fontWeight: 600 }} icon={<Tooltip title="Dashboard only"><span style={{ marginLeft: 0, lineHeight: 0, marginRight: 2 }}>{<InfoIcon />}</span></Tooltip>} />
                     <Typography variant='subtitle2' mb={1} color='text.secondary' textTransform={"none"}>Layout</Typography>
                     <Stack direction={"row"} gap={0.6} justifyContent={"space-between"} width={"100%"}>
                         <Button disableRipple size='small' variant='outlined'
@@ -237,8 +236,8 @@ export default function SettingsDrawer({ open, onClose, onChangeSettings, themeO
                                     lineHeight: "0px",
                                 }
                             }}>
-                            <Typography color={themeLayout === "vertical" ? 'primary.main' : "text.secondary"}>
-                                {Icons.layout1}
+                            <Typography sx={{fontSize:86}} color={themeLayout === "vertical" ? 'primary.main' : "text.secondary"}>
+                                <Layout1Icon />
                             </Typography>
                         </Button>
                         <Button disableRipple size='small'
@@ -254,8 +253,8 @@ export default function SettingsDrawer({ open, onClose, onChangeSettings, themeO
                                     lineHeight: "0px",
                                 }
                             }}>
-                            <Typography color={themeLayout === "mini" ? 'primary.main' : "text.secondary"}>
-                                {Icons.layout2}
+                            <Typography sx={{fontSize:86}} color={themeLayout === "mini" ? 'primary.main' : "text.secondary"}>
+                                <Layout2Icon />
                             </Typography>
                         </Button>
                         <Button disableRipple
@@ -270,8 +269,8 @@ export default function SettingsDrawer({ open, onClose, onChangeSettings, themeO
                                     lineHeight: "0px",
                                 }
                             }}>
-                            <Typography color={themeLayout === "horizontal" ? 'primary.main' : "text.secondary"}>
-                                {Icons.layout3}
+                            <Typography sx={{fontSize:86}} color={themeLayout === "horizontal" ? 'primary.main' : "text.secondary"}>
+                                <Layout3Icon />
                             </Typography>
                         </Button>
 
@@ -297,13 +296,14 @@ export default function SettingsDrawer({ open, onClose, onChangeSettings, themeO
                             <Grid key={x.name}>
                                 <Button onClick={() => handelColorChange(x.name)} disableRipple fullWidth sx={{
                                     px: 3.72,
+                                    fontSize:28,
                                     py: 2.25,
                                     background: x.name === themeColorPresets ? alpha(x.main, 0.08) : "none",
                                     overflow: "hidden",
                                     border: "none",
                                     color: x.main
                                 }}>
-                                    {Icons.colorPresets}
+                                    <ColorPresetsIcon />
                                 </Button>
                             </Grid>
                         ))}

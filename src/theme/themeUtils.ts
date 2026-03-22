@@ -118,7 +118,6 @@ export function pxToRem(value: number) {
 }
 export const getTypography = (themeFont: any, themeFontSize: number) => {
     const scale = themeFontSize / 16;
-
     return {
         fontFamily: themeFont,
         fontSize: themeFontSize,
