@@ -1,6 +1,6 @@
 {
   "name": "react-easy-dashboard",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "type": "module",
   "main": "./dist/index.umd.js",
   "module": "./dist/index.es.js",
@@ -23,13 +23,9 @@
   },
   "dependencies": {
     "@iconify/react": "^6.0.2",
-    "apexcharts": "^5.6.0",
     "framer-motion": "^12.31.1",
     "iconify-icon": "^3.0.2",
-    "path": "^0.12.7",
-    "react-apexcharts": "^2.0.1",
-    "react-easy-dashboard": "^1.0.4",
-    "swiper": "^12.1.2"
+    "path": "^0.12.7"
   },
   "peerDependencies": {
     "@emotion/react": "^11.14.0",
@@ -37,8 +33,11 @@
     "@mui/icons-material": "^7.3.7",
     "@mui/lab": "^7.0.1-beta.21",
     "@mui/material": "^7.3.7",
+    "apexcharts": "^5.6.0",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-apexcharts": "^2.0.1",
+    "react-dom": "^19.2.0",
+    "swiper": "^12.1.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

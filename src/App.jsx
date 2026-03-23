@@ -1,7 +1,7 @@
 import './App.css'
-import { useMemo, useState } from 'react'
-import { navConfig, fonts, colorPresets, ThemeProvider, DashboardLayout, CustomeAvatar, SettingsDrawer, SettingsIcon, NotificationIcon, ContactIcon, defaultImages } from "./index"
-import { Badge, Box, Button, Container, Grid, IconButton, ListItem, ListItemButton, ListItemIcon, ListItemText, Stack, Typography } from '@mui/material'
+import React, { useMemo, useState } from 'react'
+import { navConfig, fonts, colorPresets, ThemeProvider, DashboardLayout, CustomeAvatar, SettingsDrawer, SettingsIcon, NotificationIcon, ContactIcon, defaultImages, WelcomeBanner, CustomeSwiper, ArrowLeftIcon, ArrowRightIcon } from "./index"
+import { alpha, Badge, Box, Button, Container, Grid, IconButton, ListItem, ListItemButton, ListItemIcon, ListItemText, Stack, Typography } from '@mui/material'
 
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
     themeLayout: "vertical",
     isContrast: false,
     state: {
-      title: "App"
+      title: "Dashboard"
     },
     isfullScreen: document.fullscreenElement ? true : false,
     reverseLayout: false,
@@ -137,22 +137,233 @@ function App() {
   }, [])
 
 
-  return (
 
+
+  return (
     <ThemeProvider themeOptions={ThemeOptions} settings={settings} >
       <DashboardLayout themeOptions={ThemeOptions}>
-        <Container sx={{ paddingX: { sm: 5 }, paddingTop: 1, paddingBottom: 8,minWidth:"100%", maxWidth: "calc(100vw - 40px)"}}>
-          <Grid container={true} spacing={2}>
-            <Grid size={8}>
-              <WelcomeBanner />
+        <Container sx={{ paddingX: { lg: 5, md: 1.5, sm: 1.5, xs: 1.5 }, paddingTop: 1, paddingBottom: 8, minWidth: "100%", maxWidth: "calc(100vw - 40px)" }}>
+          <Grid container={true} spacing={{ lg: 3, md: 1.5, sm: 2, xs: 2 }}>
+            <Grid size={{ lg: 8, md: 8, sm: 12, xs: 12 }}>
+              <WelcomeBanner bannerHeading='Welcome back 👋 Jaydon Frankie' sortDescription="If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything." variant="default" onGo={() => console.log("Click")} backgroundImage={defaultImages.backgrounds.welcomeBanner1} SvgComponent={defaultImages.svgs.Svg1} />
             </Grid>
-            <Grid size={4}>
-              {/* <WelcomeBanner /> */}
+            <Grid size={{ lg: 4, md: 4, sm: 12, xs: 12 }}>
+              <CustomeSwiper
+                RenderActions={({ swiper }) => {
+                  const { realIndex, slideTo, slideNext, slidePrev } = swiper
+                  return <Box gap={1.7} position={"absolute"} paddingY={3.8} paddingX={2.2} alignItems={"center"} justifyContent={"start"} display={"flex"} zIndex={2} height={"50px"} top={0} left={0} width={"100%"}>
+                    {[...swiper.slides].map((x, index) => {
+                      return <Badge key={index} onClick={() => {
+                        slideTo(index)
+                      }} sx={{
+                        "& .MuiBadge-dot": {
+                          cursor: "pointer",
+                          position: "relative",
+                          left: 0,
+                          top: 0,
+                          background: (theme) => alpha(theme.palette.primary.light, index === realIndex ? 1 : 0.24)
+                        }
+                      }} badgeContent="" variant="dot" />
+                    })}
+                    <Box flexGrow={1} />
+                    <Box position={"relative"} left={10.5} color={(theme) => theme.palette.grey[400]} top={-5.5} display={"flex"} alignItems={"center"}>
+                      <IconButton onClick={() => slidePrev()} sx={{ fontSize: 22 }} color="inherit" disableRipple>
+                        <ArrowLeftIcon />
+                      </IconButton>
+                      <IconButton onClick={() => slideNext()} sx={{ fontSize: 22 }} color="inherit" disableRipple>
+                        <ArrowRightIcon />
+                      </IconButton>
+                    </Box>
+                  </Box>
+                }}
+                slides={[
+                  <React.Fragment>
+                    <Box
+                      component={"img"}
+                      width={"100%"}
+                      height={"100%"}
+                      sx={{ objectFit: 'cover' }}
+                      src={defaultImages.backgrounds.slide1}
+                      position={"relative"}
+                      zIndex={-1}
+                    />
+                    <Box
+                      sx={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        zIndex: 1,
+                        height: '100%',
+                        background: (theme) => `linear-gradient(to bottom, ${alpha(theme.palette.common.black, 0)} 0%, ${alpha(theme.palette.common.black, 1)} 75%)`,
+                        borderRadius: "inherit",
+                        aspectRatio: "inherit",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "end",
+                        alignItems: "flex-start",
+                        padding: 3,
+                        gap: 1
+                      }}
+                    >
+                      <Typography textAlign={"start"} textTransform={"uppercase"} color="primary.light" variant="subtitle2" fontSize={(theme) => `calc(${theme.typography.subtitle2.fontSize} + 1px)`} mb={0}>
+                        Featured App
+                      </Typography>
+                      <Typography
+                        mb={0}
+                        sx={{
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          whiteSpace: 'nowrap',
+                          width: '100%',
+                          textAlign: "start",
+                        }}
+                        variant="h5"
+                        color="common.white">
+                        The Rise of Remote Work: Benefits, Challenges, and Future Trends
+                      </Typography>
+                      <Typography
+                        mb={0}
+                        sx={{
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          whiteSpace: 'nowrap',
+                          width: '100%',
+                          textAlign: "start"
+                        }}
+                        variant="body2"
+                        color="common.white">
+                        The aroma of freshly brewed coffee filled the air, awakening my senses.
+                      </Typography>
+                    </Box>
+                  </React.Fragment>,
+                  <React.Fragment>
+                    <Box
+                      component={"img"}
+                      width={"100%"}
+                      height={"100%"}
+                      sx={{ objectFit: 'cover' }}
+                      src={defaultImages.backgrounds.slide2}
+                      position={"relative"}
+                      zIndex={-1}
+                    />
+                    <Box
+                      sx={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        zIndex: 1,
+                        height: '100%',
+                        background: (theme) => `linear-gradient(to bottom, ${alpha(theme.palette.common.black, 0)} 0%, ${alpha(theme.palette.common.black, 1)} 75%)`,
+                        borderRadius: "inherit",
+                        aspectRatio: "inherit",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "end",
+                        alignItems: "flex-start",
+                        padding: 3,
+                        gap: 1
+                      }}
+                    >
+                      <Typography textAlign={"start"} textTransform={"uppercase"} color="primary.light" variant="subtitle2" fontSize={(theme) => `calc(${theme.typography.subtitle2.fontSize} + 1px)`} mb={0}>
+                        Featured App
+                      </Typography>
+                      <Typography
+                        mb={0}
+                        sx={{
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          whiteSpace: 'nowrap',
+                          width: '100%',
+                          textAlign: "start",
+                        }}
+                        variant="h5"
+                        color="common.white">
+                        Understanding Blockchain Technology: Beyond Cryptocurrency
+                      </Typography>
+                      <Typography
+                        mb={0}
+                        sx={{
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          whiteSpace: 'nowrap',
+                          width: '100%',
+                          textAlign: "start"
+                        }}
+                        variant="body2"
+                        color="common.white">
+                        The children giggled with joy as they ran through the sprinklers on a hot summer day.
+                      </Typography>
+                    </Box>
+                  </React.Fragment>,
+                  <React.Fragment>
+                    <Box
+                      component={"img"}
+                      width={"100%"}
+                      height={"100%"}
+                      sx={{ objectFit: 'cover' }}
+                      src={defaultImages.backgrounds.slide3}
+                      position={"relative"}
+                      zIndex={-1}
+                    />
+                    <Box
+                      sx={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        zIndex: 1,
+                        height: '100%',
+                        background: (theme) => `linear-gradient(to bottom, ${alpha(theme.palette.common.black, 0)} 0%, ${alpha(theme.palette.common.black, 1)} 75%)`,
+                        borderRadius: "inherit",
+                        aspectRatio: "inherit",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "end",
+                        alignItems: "flex-start",
+                        padding: 3,
+                        gap: 1
+                      }}
+                    >
+                      <Typography textAlign={"start"} textTransform={"uppercase"} color="primary.light" variant="subtitle2" fontSize={(theme) => `calc(${theme.typography.subtitle2.fontSize} + 1px)`} mb={0}>
+                        Featured App
+                      </Typography>
+                      <Typography
+                        mb={0}
+                        sx={{
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          whiteSpace: 'nowrap',
+                          width: '100%',
+                          textAlign: "start",
+                        }}
+                        variant="h5"
+                        color="common.white">
+                        Mental Health in the Digital Age: Navigating Social Media and Well-being
+                      </Typography>
+                      <Typography
+                        mb={0}
+                        sx={{
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          whiteSpace: 'nowrap',
+                          width: '100%',
+                          textAlign: "start"
+                        }}
+                        variant="body2"
+                        color="common.white">
+                        He carefully crafted a beautiful sculpture out of clay, his hands skillfully shaping the intricate details.
+                      </Typography>
+                    </Box>
+                  </React.Fragment>,
+                ]}
+
+              />
+
             </Grid>
           </Grid>
         </Container>
-
-
       </DashboardLayout>
       <SettingsDrawer
         themeOptions={ThemeOptions}

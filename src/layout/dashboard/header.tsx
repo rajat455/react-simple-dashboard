@@ -144,7 +144,7 @@ export default function Header({ themeOptions }: Props) {
                     ...AppBarEffect,
                 },
             }}>
-            <Container maxWidth={"xl"} sx={{ paddingX: { sm: 5, md: 3 }, display: 'flex', flexDirection: reverseLayout ? "row-reverse" : "row", margin: 0, alignItems: "center", minHeight: isMobile || settings.themeLayout === "horizontal" ? HEADER.H_MOBILE : HEADER.H_DESKTOP }}>
+            <Container maxWidth={"lg"} sx={{ paddingX: { sm: 5, md: 3 }, display: 'flex', flexDirection: reverseLayout ? "row-reverse" : "row", margin: 0, alignItems: "center", minHeight: isMobile || settings.themeLayout === "horizontal" ? HEADER.H_MOBILE : HEADER.H_DESKTOP }}>
 
                 {
                     settings.themeLayout === "horizontal" && <Box mr={{ xs: reverseLayout ? 0 : 1.5 }} ml={{ xs: reverseLayout ? 5 : 0 }} width="40px" height="40px">

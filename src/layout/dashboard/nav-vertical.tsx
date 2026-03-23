@@ -13,8 +13,6 @@ import {
   useMediaQuery,
   Button
 } from '@mui/material';
-
-// ગ્લોબલ કમ્પોનન્ટ્સ અને કોન્ફિગ
 import { HEADER, NAV } from './config-layout';
 import CustomeAvatar from '../../components/avatar';
 
@@ -252,7 +250,7 @@ export default function NavVertical({ themeOptions }: Props) {
           open={open}
           onClose={() => onChangeLayout("mini")}
           variant="temporary"
-          style={{zIndex:open ? 1200 : -1, width:280}}
+          style={{zIndex:open ? 1200 : 1100, width:280}}
           PaperProps={{
             sx: {
               width: 280,
