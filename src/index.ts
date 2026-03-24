@@ -24,4 +24,3 @@ export { default as AntSwitch } from "./components/antSwitch";
 export { default as CustomeAvatar } from "./components/avatar";
 export { default as CustomeSlider } from "./components/customeSlider";
 export { default as  WelcomeBanner } from "./components/welcomeBenner";
-export { default as   CustomeSwiper} from "./components/customeSwiper";

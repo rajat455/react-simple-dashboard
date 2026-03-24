@@ -3,6 +3,7 @@ import { ColorPresets, Fonts } from "./themeUtils";
 
 export type ThemeMode = "light" | "dark"
 export type ColorPreset = 'default' | "cyan" | "purple" | "blue" | "yellow" | "red"
+export type color = "primary" | "warning" | "info" | "success" | "secondary" | "error"
 export type ThemeLayout = 'vertical' | 'mini' | 'horizontal'
 
 export interface SettingsValueProps {
@@ -14,7 +15,7 @@ export interface SettingsValueProps {
   isContrast: boolean;
   isFullScreen: boolean;
   reverseLayout: boolean;
-  state?:any;
+  state?: any;
 }
 
 export interface NavigationList {

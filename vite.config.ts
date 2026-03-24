@@ -18,8 +18,8 @@ export default defineConfig({
         lib: {
             entry: path.resolve(__dirname, 'src/index.ts'),
             name: 'react-easy-dashboard',
-            formats: ['es', 'umd'],
-            fileName: (format) => `index.${format}.js`,
+            formats: ['es'],
+            fileName: (format) => `index.mjs`,
         },
         rollupOptions: {
             external: [
@@ -32,9 +32,6 @@ export default defineConfig({
                 '@mui/icons-material',
                 '@mui/lab',
                 'framer-motion',
-                'apexcharts',
-                'react-apexcharts',
-                'swiper',
             ],
             output: {
                 globals: {
@@ -46,9 +43,6 @@ export default defineConfig({
                     '@emotion/styled': 'EmotionStyled',
                     '@mui/icons-material': 'MuiIconsMaterial',
                     '@mui/lab': 'MuiLab',
-                    'apexcharts': 'ApexCharts',
-                    'react-apexcharts': 'ReactApexCharts',
-                    'swiper': 'Swiper',
                 },
             },
         },

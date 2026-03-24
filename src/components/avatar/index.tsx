@@ -11,8 +11,6 @@ interface Props {
 
 export default function CustomeAvatar({src, border = 0, width, height }: Props) {
     const theme = useTheme();
-
-    // થીમ મુજબ કલર્સ
     const primaryMain = theme.palette.primary.main;
     const primaryLight = theme.palette.primary.light;
     let sx: object = {

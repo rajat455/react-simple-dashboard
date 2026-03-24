@@ -51,7 +51,11 @@ export const getPalette = (colorPresets:ColorPresets[], themeMode: ThemeMode, th
         grey: { ...paletteGray },
         secondary: {
             main: themeMode === "light" ? paletteGray[800] : commonWhite,
-            contrastText: themeMode === "light" ? commonWhite : paletteGray[800]
+            contrastText: themeMode === "light" ? commonWhite : paletteGray[800],
+            light: commonWhite,
+            lighter: commonWhite,
+            dark: commonBlack,
+            darker: commonBlack,
         },
         info: {
             lighter: "#CAFDF5",

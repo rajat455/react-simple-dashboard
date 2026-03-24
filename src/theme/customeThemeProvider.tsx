@@ -25,20 +25,18 @@ declare module '@mui/material/styles' {
             dropDown: string;
         },
         palette: Palette[] & {
-            mode: ThemeMode,
-            primary: ColorPresets
-            grey: any,
-            common: any,
-            background: any,
-            divider: any,
+            mode: ThemeMode;
+            primary: ColorPresets;
+            secondary:ColorPresets;
+            grey: any;
+            common: any;
+            background: any;
+            divider: any;
 
         },
-        shape: Shape
+        shape: Shape;
     }
 }
-
-let isLoad=false
-
 export default function CustomeThemeProvider({ children, themeOptions }: Props) {
     const { settings } = useSettings()
     const fonts = themeOptions?.fonts || F
