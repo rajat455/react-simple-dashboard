@@ -15,6 +15,13 @@ import {
 } from '@mui/material';
 import { HEADER, NAV } from './config-layout';
 import CustomeAvatar from '../../components/avatar';
+import MuiDrawer from '@mui/material/Drawer';
+import { useSettings } from '../../context/settingContext';
+import { NavigationList, SettingsValueProps, ThemeOptions } from '../../theme/types';
+import { navConfig } from './nav-config';
+import { ArrowLeftIcon, ArrowRightIcon } from '../../theme/icons';
+import { useCallback, useEffect } from 'react';
+import { defaultImages } from '../../theme/images';
 
 // Mixins with TypeScript Types
 const openMixin = (theme: Theme): CSSObject => ({
@@ -59,14 +66,6 @@ const StyledDrawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== '
     };
   }
 );
-
-import MuiDrawer from '@mui/material/Drawer';
-import { useSettings } from '../../context/settingContext';
-import { NavigationList, SettingsValueProps, ThemeOptions } from '../../theme/types';
-import { navConfig } from './nav-config';
-import { ArrowLeftIcon, ArrowRightIcon } from '../../theme/icons';
-import { useCallback, useEffect } from 'react';
-import { defaultImages } from '../../theme/images';
 
 interface Props {
   themeOptions: ThemeOptions;

@@ -12,10 +12,6 @@ interface Props {
 
 export default function DashboardLayout({ children, themeOptions }: Props) {
     const { settings } = useSettings()
-
-
-
-
     return (
         <Box sx={{ display: "flex", minHeight: "100vh", flexDirection: !settings.reverseLayout ? 'row' : "row-reverse" }}>
             {settings.themeLayout !== "horizontal" && <NavVertical themeOptions={themeOptions}  />}
