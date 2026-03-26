@@ -123,7 +123,7 @@ function App() {
       </div>
     ),
 
-    sideBarHeader: {
+    header: {
       renderTitle: () => "Dashboard",
       renderIcons: (theme, settings) => (
         // Header's icons (Notifications, Settings,...All)

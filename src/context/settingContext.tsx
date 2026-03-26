@@ -69,7 +69,7 @@ export const SettingsProvider = ({ children, defaultSettings }: { children: Reac
         }
     }, [settings])
     const onChangeState = useCallback((newState: any) => {
-        setSettings((prev) => ({ ...prev, state: newState }))
+        setSettings((prev) => ({ ...prev, state: {...newState} }))
     }, [])
     const onResetSettings = useCallback(async (oldSettings?: SettingsValueProps) => {
         if (settings.isFullScreen) await toggleFullScreen()

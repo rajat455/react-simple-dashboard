@@ -140,8 +140,6 @@ export default function CustomeThemeProvider({ children, themeOptions }: Props) 
                 }
             },
         };
-
-
         return theme;
     }, [themeMode, themeColorPresets, themeFont, themeFontSize, isContrast]);
 

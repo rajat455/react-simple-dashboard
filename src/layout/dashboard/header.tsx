@@ -100,9 +100,8 @@ const icons = (theme: Theme, settings: SettingsValueProps) => {
 export default function Header({ themeOptions }: Props) {
     const { onChangeLayout } = useSettings()
     const theme = useTheme()
-
-    const rendertitle = themeOptions?.sideBarHeader?.renderTitle || title
-    const renderIcons = themeOptions.sideBarHeader?.renderIcons || icons
+    const rendertitle = themeOptions?.header?.renderTitle || title
+    const renderIcons = themeOptions.header?.renderIcons || icons
     const navigationList = themeOptions?.navigationList || navConfig
     const renderNavItem = themeOptions?.renderNavItem || list
     const renderLogo = themeOptions?.renderLogo || logo
@@ -144,8 +143,7 @@ export default function Header({ themeOptions }: Props) {
                     ...AppBarEffect,
                 },
             }}>
-            <Box sx={{ maxWidth: "100%", paddingX: { sm: 5, md: 3 }, display: 'flex', flexDirection: reverseLayout ? "row-reverse" : "row", margin: 0, alignItems: "center", minHeight: isMobile || settings.themeLayout === "horizontal" ? HEADER.H_MOBILE : HEADER.H_DESKTOP }}>
-
+            <Box sx={{ maxWidth: "100%", paddingX: { sm: 5, md: 3, xs: 1.5 }, display: 'flex', flexDirection: reverseLayout ? "row-reverse" : "row", margin: 0, alignItems: "center", minHeight: isMobile || settings.themeLayout === "horizontal" ? HEADER.H_MOBILE : HEADER.H_DESKTOP }}>
                 {
                     settings.themeLayout === "horizontal" && <Box mr={{ xs: reverseLayout ? 0 : 1.5 }} ml={{ xs: reverseLayout ? 5 : 0 }} width="40px" height="40px">
                         {renderLogo(theme, settings)}
@@ -168,7 +166,7 @@ export default function Header({ themeOptions }: Props) {
                 {renderIcons(theme, settings)}
 
             </Box>
-            {settings.themeLayout === "horizontal" && <Box  sx={{ paddingLeft: "12px !important", paddingRight: "12px !important" }}>
+            {settings.themeLayout === "horizontal" && <Box sx={{ paddingLeft: "12px !important", paddingRight: "12px !important" }}>
                 <Divider sx={{ borderStyle: "dashed", borderWidth: "1px" }} />
                 <List sx={{
                     padding: 0, paddingY: 2, display: "flex", gap: 0.7, maxWidth: "calc(100vw - 40px) !important", overflowX: "scroll",

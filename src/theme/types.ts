@@ -34,7 +34,7 @@ export interface ThemeOptions {
   renderNavItem?: (navItem: any, theme: Theme, settings: SettingsValueProps) => ReactNode;
   navigationList?: NavigationList[];
   renderFooter?: (theme: Theme, settings: SettingsValueProps) => ReactNode;
-  sideBarHeader?: {
+  header?: {
     title: string;
     renderTitle: (theme: Theme, settings: SettingsValueProps) => ReactNode | string
     renderIcons: (theme: Theme, settings: SettingsValueProps) => ReactNode;

@@ -18,12 +18,13 @@ function App() {
     isfullScreen: document.fullscreenElement ? true : false,
     reverseLayout: false,
   }
+  /** @type {import('react-easy-dashboard').ThemeOptions} */
   const ThemeOptions = useMemo(() => {
     return {
       navigationList: [...navConfig],
       fonts: [...fonts],
       colorPresets: colorPresets,
-      renderLogo: () => {
+      renderLogo: (theme) => {
         return <LogoIcon />
       },
       renderNavItem: (item, theme, settings) => {
@@ -80,7 +81,7 @@ function App() {
           </Button>
         </Box>
       },
-      sideBarHeader: {
+      header: {
         renderTitle: (_theme, settings) => {
           return settings?.state?.title
         },
@@ -141,9 +142,9 @@ function App() {
   return (
     <ThemeProvider themeOptions={ThemeOptions} settings={settings} >
       <DashboardLayout themeOptions={ThemeOptions}>
-        <Container maxWidth={"xl"}  sx={{  paddingTop: 1, paddingBottom: 8,  }}>
-          <Grid container={true} 
-          spacing={{ lg: 3, md: 1.5, sm: 2, xs: 2 }}
+        <Container maxWidth={"xl"} sx={{ paddingTop: 1, paddingBottom: 8, }}>
+          <Grid container={true}
+            spacing={{ lg: 3, md: 1.5, sm: 2, xs: 2 }}
           >
             <Grid size={{ lg: 6, md: 12, sm: 12, xs: 12 }}>
               <WelcomeBanner bannerHeading='Welcome back 👋 Jaydon Frankie' sortDescription="If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything." color="info" onGo={() => console.log("Click")} backgroundImage={defaultImages.backgrounds.welcomeBanner1} />
