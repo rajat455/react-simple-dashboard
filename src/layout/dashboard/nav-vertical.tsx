@@ -7,7 +7,6 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  Collapse,
   Drawer,
   Typography,
   useMediaQuery,
@@ -17,13 +16,12 @@ import { HEADER, NAV } from './config-layout';
 import CustomeAvatar from '../../components/avatar';
 import MuiDrawer from '@mui/material/Drawer';
 import { useSettings } from '../../context/settingContext';
-import { NavigationList, SettingsValueProps, ThemeOptions } from '../../theme/types';
-import { navConfig } from './nav-config';
+import { NavigationList, ThemeLayout } from '../../theme/types';
 import { ArrowLeftIcon, ArrowRightIcon } from '../../theme/icons';
-import { useCallback, useEffect } from 'react';
+import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
 import { defaultImages } from '../../theme/images';
+import { NavigationContext, useNavigate } from '../../context/navigationContext';
 
-// Mixins with TypeScript Types
 const openMixin = (theme: Theme): CSSObject => ({
   width: NAV.WIDTH,
   transition: theme.transitions.create('width', {
@@ -39,12 +37,12 @@ const closedMixin = (theme: Theme): CSSObject => ({
   }),
   width: NAV.WIDTH_MIN,
 });
-// Styled Component
+
 const StyledDrawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })<{ open?: boolean }>(
   ({ theme, open }) => {
     const paperStyle = {
       overflow: "visible",
-      position: 'reletive',
+      // position: 'relative',
       boxShadow: "none",
       borderRight: `1px solid ${theme.palette.divider}`,
       scrollbarGutter: "auto",
@@ -67,17 +65,19 @@ const StyledDrawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== '
   }
 );
 
-interface Props {
-  themeOptions: ThemeOptions;
-}
-const list = (item: NavigationList, theme: Theme, settings: SettingsValueProps) => {
+
+const navItems = (item: NavigationList) => {
+  const { settings } = useSettings()
   const vertical = settings.themeLayout === "vertical"
   const mini = settings.themeLayout === "mini"
   const horizontal = settings.themeLayout === "horizontal"
   const { reverseLayout } = settings
+  const theme = useTheme()
+  const { navigateTo } = useNavigate()
 
-  return <ListItem key={item.heading} disablePadding sx={{ display: 'block', mb: 0.5 }}>
+  return <ListItem key={item.href} disablePadding sx={{ display: 'block', mb: 0.5 }}>
     <ListItemButton
+      onClick={() => navigateTo(item)}
       selected={item.selected}
       sx={{
         minHeight: horizontal ? 32 : 44,
@@ -98,9 +98,9 @@ const list = (item: NavigationList, theme: Theme, settings: SettingsValueProps) 
         minWidth: 0,
         mr: (!mini && !horizontal && vertical) ? (!reverseLayout ? 0.8 : 0) : 0,
         justifyContent: 'center',
-        fontSize:24,
         alignItems: "center",
         color: item.selected ? (theme.palette.mode === "light" ? "primary.main" : "primary.light") : "text.secondary",
+        fontSize: 24
       }}>
         {item.icon}
       </ListItemIcon>
@@ -109,39 +109,14 @@ const list = (item: NavigationList, theme: Theme, settings: SettingsValueProps) 
   </ListItem>
 }
 
-const logo = (theme: Theme) => {
-  return <svg width="100%" height="100%" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="_r_4_-1" x1="152" y1="167.79" x2="65.523" y2="259.624" gradientUnits="userSpaceOnUse"><stop stopColor={theme.palette.primary.dark}></stop><stop offset="1" stopColor={theme.palette.primary.main}></stop></linearGradient><linearGradient id="_r_4_-2" x1="86" y1="128" x2="86" y2="384" gradientUnits="userSpaceOnUse"><stop stopColor={theme.palette.primary.light}></stop><stop offset="1" stopColor={theme.palette.primary.main}></stop></linearGradient><linearGradient id="_r_4_-3" x1="402" y1="288" x2="402" y2="384" gradientUnits="userSpaceOnUse"><stop stopColor={theme.palette.primary.light}></stop><stop offset="1" stopColor={theme.palette.primary.main}></stop></linearGradient></defs><path fill="url(#_r_4_-1)" d="M86.352 246.358C137.511 214.183 161.836 245.017 183.168 285.573C165.515 317.716 153.837 337.331 148.132 344.418C137.373 357.788 125.636 367.911 111.202 373.752C80.856 388.014 43.132 388.681 14 371.048L86.352 246.358Z"></path><path fill="url(#_r_4_-2)" fillRule="evenodd" clipRule="evenodd" d="M444.31 229.726C398.04 148.77 350.21 72.498 295.267 184.382C287.751 198.766 282.272 226.719 270 226.719V226.577C257.728 226.577 252.251 198.624 244.735 184.24C189.79 72.356 141.96 148.628 95.689 229.584C92.207 235.69 88.862 241.516 86 246.58C192.038 179.453 183.11 382.247 270 383.858V384C356.891 382.389 347.962 179.595 454 246.72C451.139 241.658 447.794 235.832 444.31 229.726Z"></path><path fill="url(#_r_4_-3)" fillRule="evenodd" clipRule="evenodd" d="M450 384C476.509 384 498 362.509 498 336C498 309.491 476.509 288 450 288C423.491 288 402 309.491 402 336C402 362.509 423.491 384 450 384Z"></path></svg>
-}
-const Footer = (theme: Theme) => {
-  return <Box sx={{ px: 2, py: 5, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: "center", justifyContent: 'center' }}>
-    <IconButton size="small"
-      disableRipple
-      sx={{ "&:hover": { transform: "scale(1.04)" } }}
-      className="p-0">
-      <CustomeAvatar src={defaultImages.avatars.avatar1} border={3} width={48} height={48} />
-    </IconButton>
-    <Typography variant='subtitle1' mt={1}>Rajat Jayswal</Typography>
-    <Typography variant='body2' sx={{ color: 'text.disabled', mb: 2 }}>rajatjayswal80@mail.com</Typography>
-    <Button variant='contained' color='secondary' sx={{ borderRadius: theme.shape.borderRadius + "px" }}>
-      Sign Out
-    </Button>
-  </Box>
-}
 
-
-export default function NavVertical({ themeOptions }: Props) {
+function NavVertical({ children, onClose, navigationList, onNavigate }: { children?: ReactNode, navigationList: NavigationList[], onNavigate: (item: NavigationList) => void, onClose: (themeLayout: ThemeLayout) => void }) {
   const theme = useTheme();
-  const navigationList = themeOptions?.navigationList || navConfig
-  const renderNavItem = themeOptions?.renderNavItem || list
-  const renderLogo = themeOptions?.renderLogo || logo
-  const renderFooter = themeOptions?.renderFooter || Footer
-
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const isTab = useMediaQuery(theme.breakpoints.down("md"));
-  const isDashktop = useMediaQuery(theme.breakpoints.down("lg"));
   const { settings, onChangeLayout } = useSettings();
-  const { reverseLayout } = settings
-  const open = (settings.themeLayout === "vertical") || (settings.themeLayout === "horizontal")
+  const { reverseLayout, themeLayout } = settings
+  const open = (themeLayout === "vertical") || (themeLayout === "horizontal")
 
   const renderList = (
     <>
@@ -158,7 +133,7 @@ export default function NavVertical({ themeOptions }: Props) {
         justifyContent: open ? "space-between" : "center"
       }}>
         <Box width="40px" height="40px">
-          {renderLogo(theme, settings)}
+          <NavVertical.Logo />
         </Box>
 
         {!isMobile && (
@@ -177,6 +152,9 @@ export default function NavVertical({ themeOptions }: Props) {
               color: "text.secondary",
               zIndex: theme.zIndex.drawer + 1,
               borderColor: theme.palette.divider,
+              "&.Mui-disabled": {
+                backgroundColor: theme.palette.background.default
+              },
               "&:hover": {
                 bgcolor: (theme.palette.background as any)["neutral"],
                 color: "text.primary"
@@ -184,7 +162,7 @@ export default function NavVertical({ themeOptions }: Props) {
             }}
           >
             {
-              open ? (reverseLayout ? <ArrowRightIcon/> : <ArrowLeftIcon/>) : (!reverseLayout ? <ArrowRightIcon/> : <ArrowLeftIcon/>)
+              open ? (reverseLayout ? <ArrowRightIcon /> : <ArrowLeftIcon />) : (!reverseLayout ? <ArrowRightIcon /> : <ArrowLeftIcon />)
             }
           </IconButton>
         )}
@@ -198,8 +176,8 @@ export default function NavVertical({ themeOptions }: Props) {
         overflowX: "hidden",
         height: '100%',
         maxWidth: "100% !important",
-        '::-webkit-scrollbar': { display: open ? "block" : "none", width: 2 },
-        "&::-webkit-scrollbar-thumb": { backgroundColor: "transparent" },
+        '::-webkit-scrollbar': { display: open ? "block" : "none" },
+        // '::-webkit-scrollbar-thumb': { backgroundColor: "transparent" },
         "&:hover": {
           "&::-webkit-scrollbar-thumb": { backgroundColor: alpha(theme.palette.grey[500], 0.39) }
         },
@@ -222,52 +200,86 @@ export default function NavVertical({ themeOptions }: Props) {
             </Typography>
           </Box>
 
-          <Collapse in={true} timeout="auto" unmountOnExit>
-            <List sx={{ py: 0 }}>
-              {navigationList.map((item) => {
-                return renderNavItem(item, theme, settings);
-              })}
-            </List>
-          </Collapse>
+          <NavVertical.NavigationItems renderNavItem={navItems} />
         </List>
+        {open && <NavVertical.Footer />}
 
-        {open && renderFooter(theme, settings)}
       </Box>
 
     </>
   );
 
+  const navigateTo = (item: NavigationList) => {
+    if (!onNavigate) return;
+    onNavigate(item)
+  }
+
+
+
+
   useEffect(useCallback(() => {
-    if (isTab) onChangeLayout("mini")
-  }, [isTab, isDashktop]), [isTab, isDashktop])
+    if (isTab) {
+      onChangeLayout("mini")
+      onClose("mini")
+    }
+  }, [isTab]), [isTab])
 
   return (
-    <Box component="nav" sx={{ flex: 0, flexShrink: { lg: 0 }, width: { lg: open ? NAV.WIDTH : NAV.WIDTH_MIN } }}>
-      {isMobile ? (
-        <Drawer
-          anchor={!reverseLayout ? "left" : "right"}
-          open={open}
-          onClose={() => onChangeLayout("mini")}
-          variant="temporary"
-          style={{zIndex:open ? 1200 : 1100, width:280}}
-          PaperProps={{
-            sx: {
-              width: 280,
-              bgcolor: 'background.default',
-              backgroundImage: `url(${defaultImages.backgrounds.deemBg1}), url(${defaultImages.backgrounds.deemBg2})`,
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "50%, 50%",
-              backgroundPosition: "left bottom, right top"
-            }
-          }}
-        >
-          {renderList}
-        </Drawer>
-      ) : (
-        <StyledDrawer anchor={!reverseLayout ? 'left' : 'right'} variant="permanent" open={open}>
-          {renderList}
-        </StyledDrawer>
-      )}
-    </Box>
+    <NavigationContext.Provider value={{ navigationList, navigateTo }}>
+      <Box component="nav" sx={{ flex: 0, flexShrink: { lg: 0 }, width: { lg: open ? NAV.WIDTH : NAV.WIDTH_MIN } }}>
+        {isMobile ? (
+          <Drawer
+            anchor={!reverseLayout ? "left" : "right"}
+            open={open}
+            onClose={() => onChangeLayout("mini")}
+            variant="temporary"
+            style={{ width: !open ? 0 : "100%" }}
+            PaperProps={{
+              sx: {
+                width: 280,
+                bgcolor: alpha(theme.palette.background.default, 0.9),
+              }
+            }}
+          >
+            {children || renderList}
+          </Drawer>
+        ) : (
+          <StyledDrawer anchor={!reverseLayout ? 'left' : 'right'} variant="permanent" open={open}>
+            {children || renderList}
+          </StyledDrawer>
+        )}
+      </Box>
+    </NavigationContext.Provider>
   );
 }
+
+
+NavVertical.Logo = ({ children }: { children?: ReactNode }) => {
+  const theme = useTheme()
+  return children || <svg width="100%" height="100%" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="_r_4_-1" x1="152" y1="167.79" x2="65.523" y2="259.624" gradientUnits="userSpaceOnUse"><stop stopColor={theme.palette.primary.dark}></stop><stop offset="1" stopColor={theme.palette.primary.main}></stop></linearGradient><linearGradient id="_r_4_-2" x1="86" y1="128" x2="86" y2="384" gradientUnits="userSpaceOnUse"><stop stopColor={theme.palette.primary.light}></stop><stop offset="1" stopColor={theme.palette.primary.main}></stop></linearGradient><linearGradient id="_r_4_-3" x1="402" y1="288" x2="402" y2="384" gradientUnits="userSpaceOnUse"><stop stopColor={theme.palette.primary.light}></stop><stop offset="1" stopColor={theme.palette.primary.main}></stop></linearGradient></defs><path fill="url(#_r_4_-1)" d="M86.352 246.358C137.511 214.183 161.836 245.017 183.168 285.573C165.515 317.716 153.837 337.331 148.132 344.418C137.373 357.788 125.636 367.911 111.202 373.752C80.856 388.014 43.132 388.681 14 371.048L86.352 246.358Z"></path><path fill="url(#_r_4_-2)" fillRule="evenodd" clipRule="evenodd" d="M444.31 229.726C398.04 148.77 350.21 72.498 295.267 184.382C287.751 198.766 282.272 226.719 270 226.719V226.577C257.728 226.577 252.251 198.624 244.735 184.24C189.79 72.356 141.96 148.628 95.689 229.584C92.207 235.69 88.862 241.516 86 246.58C192.038 179.453 183.11 382.247 270 383.858V384C356.891 382.389 347.962 179.595 454 246.72C451.139 241.658 447.794 235.832 444.31 229.726Z"></path><path fill="url(#_r_4_-3)" fillRule="evenodd" clipRule="evenodd" d="M450 384C476.509 384 498 362.509 498 336C498 309.491 476.509 288 450 288C423.491 288 402 309.491 402 336C402 362.509 423.491 384 450 384Z"></path></svg>
+}
+
+NavVertical.Footer = ({ children }: { children?: ReactNode }) => {
+  const theme = useTheme()
+  return children || <Box sx={{ px: 2, py: 5, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: "center", justifyContent: 'center' }}>
+    <IconButton size="small"
+      disableRipple
+      sx={{ "&:hover": { transform: "scale(1.04)" } }}
+      className="p-0">
+      <CustomeAvatar src={defaultImages.avatars.avatar1} border={3} width={48} height={48} />
+    </IconButton>
+    <Typography variant='subtitle1' mt={1}>Rajat Jayswal</Typography>
+    <Typography variant='body2' sx={{ color: 'text.disabled', mb: 2 }}>rajatjayswal80@mail.com</Typography>
+    <Button variant='contained' color='secondary' sx={{ borderRadius: theme.shape.borderRadius + "px" }}>
+      Sign Out
+    </Button>
+  </Box>
+}
+NavVertical.NavigationItems = ({ children, renderNavItem }: { children?: ReactNode, renderNavItem: (item: NavigationList) => ReactNode }) => {
+  const { navigationList } = useNavigate()
+  return children || navigationList.map((item) => renderNavItem(item))
+}
+
+
+
+export default NavVertical

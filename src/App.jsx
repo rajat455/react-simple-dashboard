@@ -1,7 +1,9 @@
 import './App.css'
-import { useMemo, useState } from 'react'
-import { navConfig, fonts, colorPresets, ThemeProvider, DashboardLayout, CustomeAvatar, SettingsDrawer, SettingsIcon, NotificationIcon, ContactIcon, defaultImages, WelcomeBanner, LogoIcon } from "./index"
-import { Badge, Box, Button, Container, Grid, IconButton, ListItem, ListItemButton, ListItemIcon, ListItemText, Stack, Typography } from '@mui/material'
+import { useState } from 'react'
+import { navConfig, ThemeProvider, DashboardLayout, SettingsDrawer, defaultImages, WelcomeBanner } from "../dist/index"
+import { Button, Chip, Container, Grid, IconButton, Typography } from '@mui/material'
+import CustomeDataGrid from './components/customeDataGrid'
+import { GridMoreVertIcon } from '@mui/x-data-grid'
 
 function App() {
   const [openSettings, setOpenSettings] = useState(false)
@@ -12,151 +14,154 @@ function App() {
     themeFontSize: 17,
     themeLayout: "vertical",
     isContrast: false,
-    state: {
-      title: "Dashboard"
-    },
     isfullScreen: document.fullscreenElement ? true : false,
     reverseLayout: false,
   }
-  /** @type {import('react-easy-dashboard').ThemeOptions} */
-  const ThemeOptions = useMemo(() => {
-    return {
-      navigationList: [...navConfig],
-      fonts: [...fonts],
-      colorPresets: colorPresets,
-      renderLogo: (theme) => {
-        return <LogoIcon />
-      },
-      // renderNavItem: (item, theme, settings) => {
-      //   const vertical = settings.themeLayout === "vertical"
-      //   const mini = settings.themeLayout === "mini"
-      //   const horizontal = settings.themeLayout === "horizontal"
-      //   const { reverseLayout } = settings
 
-      //   return <ListItem key={item.heading} disablePadding sx={{ display: 'block', mb: 0.5 }}>
-      //     <ListItemButton
-      //       selected={item.selected}
-      //       sx={{
-      //         minHeight: horizontal ? 32 : 44,
-      //         borderRadius: 1,
-      //         display: 'flex',
-      //         maxWidth: "100%",
-      //         flexDirection: !mini ? (reverseLayout ? "row-reverse" : "row") : "column",
-      //         justifyContent: !mini ? (reverseLayout ? "end" : 'start') : 'center',
-      //         alignItems: 'center',
-      //         paddingY: horizontal ? 0 : 0.5,
-      //         gap: (!mini && !reverseLayout && !horizontal ? 0.7 : !mini && reverseLayout && !horizontal ? 1.5 : 0.7),
-      //         paddingLeft: !mini && !horizontal ? (reverseLayout ? 1 : 1.5) : 1,
-      //         paddingRight: !mini && !horizontal ? (reverseLayout ? 1.5 : 1) : 1,
-      //         paddingTop: horizontal ? 0 : (!mini ? 0.5 : 1)
-      //       }}
-      //     >
-      //       <ListItemIcon sx={{
-      //         minWidth: 0,
-      //         mr: (!mini && !horizontal && vertical) ? (!reverseLayout ? 0.8 : 0) : 0,
-      //         justifyContent: 'center',
-      //         alignItems: "center",
-      //         color: item.selected ? (theme.palette.mode === "light" ? "primary.main" : "primary.light") : "text.secondary",
-      //         fontSize: 24
-      //       }}>
-      //         {item.icon}
-      //       </ListItemIcon>
-      //       <ListItemText style={{ marginTop: 0, marginBottom: 3, flex: "unset" }} primary={item.heading} primaryTypographyProps={{ minWidth: "max-content", fontWeight: item.selected ? (!mini ? 600 : 700) : (!mini ? 500 : 600), color: item.selected ? (theme.palette.mode === "light" ? "primary.main" : "primary.light") : "text.secondary", sx: { lineHeight: "16px", fontSize: !mini ? theme.typography.body2.fontSize : `calc(${theme.typography.subtitle2.fontSize} - 1px)` } }} />
-      //     </ListItemButton>
-      //   </ListItem>
-      // },
-      renderFooter: (theme) => {
-        return <Box sx={{ px: 2, py: 5, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: "center", justifyContent: 'center' }}>
-          <IconButton size="small"
-            onClick={() => setOpenSettings(true)}
-            disableRipple
-            sx={{ "&:hover": { transform: "scale(1.04)" } }}
-            className="p-0">
-            <CustomeAvatar src={defaultImages.avatars.avatar1} border={3} width={48} height={48} />
-          </IconButton>
-          <Typography variant='subtitle1' mt={1}>Rajat Jayswal</Typography>
-          <Typography variant='body2' sx={{ color: 'text.disabled', mb: 2 }}>rajatjayswal80@mail.com</Typography>
-          <Button variant='contained' color='secondary' sx={{ borderRadius: theme.shape.borderRadius + "px" }}>
-            Sign Out
-          </Button>
-        </Box>
+  const columns = [
+    {
+      field: 'id',
+      headerName: 'Invoice ID',
+      flex: 1,
+      minWidth: 120,
+      disableColumnMenu: true,
+      filterable: false,
+      sortable: false
+    },
+    {
+      field: 'category',
+      headerName: 'Category',
+      flex: 1,
+      minWidth: 120,
+      disableColumnMenu: true,
+      filterable: false,
+      sortable: false
+    },
+    {
+      field: 'price',
+      headerName: 'Price',
+      flex: 1,
+      minWidth: 100,
+      disableColumnMenu: true,
+      filterable: false,
+      sortable: false,
+      renderCell: (params) => (
+        <Typography variant="body2" mb={0}>${params.value}</Typography>
+      )
+    },
+    {
+      field: 'status',
+      headerName: 'Status',
+      flex: 1,
+      minWidth: 130,
+      disableColumnMenu: true,
+      filterable: false,
+      sortable: false,
+      renderCell: (params) => {
+        const status = params.value;
+        const statusConfig = {
+          'Paid': { bg: (theme) => theme.palette.success.lighter, color: (theme) => theme.palette.success.dark },
+          'Out of date': { bg: (theme) => theme.palette.error.lighter, color: (theme) => theme.palette.error.dark },
+          'Progress': { bg: (theme) => theme.palette.warning.lighter, color: (theme) => theme.palette.warning.dark },
+        };
+
+        const config = statusConfig[status] || statusConfig['Progress'];
+
+        return (
+          <Chip
+            label={status}
+            size="small"
+            sx={{
+              fontWeight: 700,
+              borderRadius: '8px',
+              backgroundColor: config.bg,
+              color: config.color,
+              "& .MuiChip-label": {
+                textTransform: "none",
+                fontWeight: 700,
+              },
+              fontSize: (theme) => `calc(${theme.typography.subtitle2.fontSize} + 1px)`,
+            }}
+          />
+        );
       },
-      header: {
-        renderTitle: (_theme, settings) => {
-          return settings?.state?.title
-        },
-        renderIcons: (_theme, settings) => {
-          return <Stack direction={settings.reverseLayout ? "row-reverse" : "row"} alignItems="center" gap={0.75}>
-            <IconButton
-              onClick={() => setOpenSettings(true)}
-              sx={{ fontSize: 24, color: "text.secondary", "&:hover": { transform: "scale(1.04)" } }}
-            >
-              <Badge badgeContent={4} color="error">
-                <NotificationIcon />
-              </Badge>
-            </IconButton>
-            <IconButton size="small"
-              onClick={() => setOpenSettings(true)}
-              sx={{ fontSize: 24, color: "text.secondary", "&:hover": { transform: "scale(1.04)" } }}
-            >
-              <Badge badgeContent="" color={"error"} variant="dot">
-                <Box component={"span"} sx={{
-                  transition: "transform 0.4s ease-in-out",
-                  animation: "spin 9s linear infinite",
-                  "@keyframes spin": {
-                    "0%": {
-                      transform: "rotate(0deg)",
-                    },
-                    "100%": {
-                      transform: "rotate(360deg)",
-                    },
-                  },
-                }}>
-                  <SettingsIcon />
-                </Box>
-              </Badge>
-            </IconButton>
-            <IconButton size="small"
-              onClick={() => setOpenSettings(true)}
-              sx={{ color: "text.secondary", fontSize: 24, "&:hover": { transform: "scale(1.04)" } }}
-            >
-              <ContactIcon />
-            </IconButton>
-            <IconButton size="small"
-              onClick={() => setOpenSettings(true)}
-              disableRipple
-              sx={{ "&:hover": { transform: "scale(1.04)" } }}
-              className="p-0"
-            >
-              <CustomeAvatar src={defaultImages.avatars.avatar1} width={34} height={34} border={3} />
-            </IconButton>
-          </Stack>
-        }
-      }
-    }
-  }, [])
+    },
+    {
+      field: 'actions',
+      headerName: 'Actions',
+      disableColumnMenu: true,
+      filterable: false,
+      sortable: false,
+      flex: 1,
+      minWidth: 130,
+      align: 'left',
+      renderCell: (params) => (
+        <IconButton
+          size="small"
+        // onClick={() => onActionClick && onActionClick(params.row)}
+        >
+          <GridMoreVertIcon fontSize="small" sx={{ color: '#919EAB' }} />
+        </IconButton>
+      ),
+    },
+  ]
+
+  const rows = [
+    { id: 'INV-1990', category: 'Android', price: 83.74, status: 'Paid' },
+    { id: 'INV-1991', category: 'Mac', price: 97.14, status: 'Out of date' },
+    { id: 'INV-1992', category: 'Windows', price: 68.71, status: 'Progress' },
+    { id: 'INV-1993', category: 'Android', price: 85.21, status: 'Paid' },
+    { id: 'INV-1994', category: 'Mac', price: 52.17, status: 'Paid' },
+  ];
 
 
 
 
   return (
-    <ThemeProvider themeOptions={ThemeOptions} settings={settings} >
-      <DashboardLayout themeOptions={ThemeOptions}>
-        <Container maxWidth={"xl"} sx={{ paddingTop: 1, paddingBottom: 8, }}>
+    <ThemeProvider fonts={[/**Include Fonts */]} colorPresets={[/**Include ColorPresets */]} settings={settings} >
+      <DashboardLayout
+        navigationList={navConfig}
+        onHeaderAction={(action) => {
+          const { id } = action.currentTarget
+          switch (id) {
+            case "#toggle_settings":
+              return setOpenSettings(true)
+            default:
+              return
+          }
+        }
+        }
+        onNavigate={(item) => {
+          console.log(item);
+        }}>
+        <Container maxWidth={"xl"} sx={{ paddingX: { lg: 5, sm: 5, md: 3, xs: 1.5 }, paddingTop: 1, paddingBottom: 8, }}>
           <Grid container={true}
             spacing={{ lg: 3, md: 1.5, sm: 2, xs: 2 }}
           >
-            <Grid size={{ lg: 6, md: 12, sm: 12, xs: 12 }}>
-              <WelcomeBanner bannerHeading='Welcome back 👋 Jaydon Frankie' sortDescription="If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything." color="info" onGo={() => console.log("Click")} backgroundImage={defaultImages.backgrounds.welcomeBanner1} />
+            <Grid size={{ lg: 12, md: 12, sm: 12, xs: 12 }}>
+              <WelcomeBanner bannerSubHeading="If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything." color="primary" onGo={() => console.log("Click")} backgroundImage={defaultImages.backgrounds.welcomeBanner1} />
             </Grid>
             <Grid size={{ lg: 6, md: 12, sm: 12, xs: 12 }}>
-              <WelcomeBanner bannerHeading='Welcome back 👋 Jaydon Frankie' sortDescription="If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything." color="info" onGo={() => console.log("Click")} backgroundImage={defaultImages.backgrounds.welcomeBanner1} />
+              <CustomeDataGrid columns={columns} title='New Users' InnerProps={{ rows: rows, disableColumnFilter: false, columns: columns }} >
+              </CustomeDataGrid>
+            </Grid>
+            <Grid size={{ lg: 6, md: 12, sm: 12, xs: 12 }}>
+              <WelcomeBanner SvgComponent={() => {
+                return <>
+                  <defaultImages.svgs.Svg1 />
+                </>
+              }} bannerHeading='Welcome back 👋 Jayswal Rajat' bannerSubHeading='Have nice day Mr. Rajat this is an owerview of your dashboard' color='primary' >
+                <WelcomeBanner.BannerAction>
+                  <Button size='small' color='primary' variant='contained'>
+                    Order Now
+                  </Button>
+                </WelcomeBanner.BannerAction>
+              </WelcomeBanner>
             </Grid>
           </Grid>
         </Container>
       </DashboardLayout>
       <SettingsDrawer
-        themeOptions={ThemeOptions}
         open={openSettings}
         onChangeSettings={(settings) => {
           console.log(settings);
@@ -164,9 +169,6 @@ function App() {
         onClose={() => setOpenSettings(false)}
       />
     </ThemeProvider >
-
-
   )
 }
-
 export default App

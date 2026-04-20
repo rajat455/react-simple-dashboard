@@ -1,14 +1,13 @@
 // 1. Types & Interfaces
-export type { SettingsValueProps, ColorPreset, ThemeMode, ThemeOptions, ThemeLayout, NavigationList,color } from "./theme/types";
+export type { SettingsValueProps, ColorPreset, ThemeMode, ThemeLayout, NavigationList, color, ButtonAction, ColorPresets, Fonts } from "./theme/types";
 
 // 3. Theme Configuration & Utils
 export { colorPresets, commonBlack, pxToRem, commonWhite, getCustomShadows, getPalette, getTypography, paletteGray, fonts } from "./theme/themeUtils";
-export type {ColorPresets,Fonts } from "./theme/themeUtils";
-export { AppIcon,ArrowLeftIcon,ArrowRightIcon,BankingIcon,BlogIcon,BookingIcon,CalendarIcon,ChatIcon,CloseIcon,ColorPresetsIcon,CompactIcon,ContactIcon,ContrastIcon,CourseIcon,EcommerceIcon,AnalyticsIcon,FileIcon,FileManagerIcon,FontsIcon,FullScreenIcon,InfoIcon,InvoiceIcon,JobIcon,Layout1Icon,Layout2Icon,Layout3Icon,MailIcon,MenuIcon,NightModeIcon,NotificationIcon,OrderIcon,PermissionIcon,ProductIcon,ResetIcon,RightToLeftIcon,SettingsIcon,TourIcon,UserIcon,WindowScreenIcon , LogoIcon} from "./theme/icons"
-export {defaultImages} from "./theme/images"
+export { AppIcon, ArrowLeftIcon, ArrowRightIcon, BankingIcon, BlogIcon, BookingIcon, CalendarIcon, ChatIcon, CloseIcon, ColorPresetsIcon, CompactIcon, ContactIcon, ContrastIcon, CourseIcon, EcommerceIcon, AnalyticsIcon, FileIcon, FileManagerIcon, FontsIcon, FullScreenIcon, InfoIcon, InvoiceIcon, JobIcon, Layout1Icon, Layout2Icon, Layout3Icon, MailIcon, MenuIcon, NightModeIcon, NotificationIcon, OrderIcon, PermissionIcon, ProductIcon, ResetIcon, RightToLeftIcon, SettingsIcon, TourIcon, UserIcon, WindowScreenIcon, LogoIcon } from "./theme/icons"
+export { defaultImages } from "./theme/images"
 
 // 2. Providers & Context Hooks
-export { default as ThemeProvider } from "./theme"
+export { default as ThemeProvider, useThemeOptions } from "./theme"
 export { SettingsProvider, useSettings } from "./context/settingContext";
 export { default as CustomeThemeProvider } from "./theme/customeThemeProvider";
 
@@ -24,4 +23,4 @@ export { navConfig } from "./layout/dashboard/nav-config";
 export { default as AntSwitch } from "./components/antSwitch";
 export { default as CustomeAvatar } from "./components/avatar";
 export { default as CustomeSlider } from "./components/customeSlider";
-export { default as  WelcomeBanner } from "./components/welcomeBenner";
+export { default as WelcomeBanner } from "./components/welcomeBenner";

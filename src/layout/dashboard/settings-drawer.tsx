@@ -4,32 +4,31 @@ import CustomeSlider from '../../components/customeSlider';
 import { useSettings } from '../../context/settingContext';
 import { colorPresets as C, fonts as F } from '../../theme/themeUtils';
 import { CloseIcon, ColorPresetsIcon, ContrastIcon, FontsIcon, FullScreenIcon, InfoIcon, Layout1Icon, Layout2Icon, Layout3Icon, NightModeIcon, ResetIcon, RightToLeftIcon, WindowScreenIcon } from '../../theme/icons';
-import { SettingsValueProps, ThemeOptions } from '../../theme/types';
+import { SettingsValueProps } from '../../theme/types';
 import { useEffect } from 'react';
 import { defaultImages } from '../../theme/images';
+import { useThemeOptions } from '../../theme';
 
 
 interface Props {
     open: boolean;
     onClose: () => void;
-    themeOptions: ThemeOptions;
     onChangeSettings?: (settings: SettingsValueProps) => void
 }
 
 let initialSettings: SettingsValueProps | null = null
-export default function SettingsDrawer({ open, onClose, onChangeSettings, themeOptions }: Props) {
+export default function SettingsDrawer({ open, onClose, onChangeSettings }: Props) {
     const theme = useTheme()
     useEffect(() => {
         if (!initialSettings) initialSettings = settings
     }, [])
     const { settings, onChangeColor, toggleContrast, toggleFullScreen, toggleReverseLayout, onChangeFont, onChangeLayout, onChangeMode, onResetSettings, onResizeFont } = useSettings()
     onChangeSettings = onChangeSettings || function () { }
-
-    const fonts = themeOptions?.fonts || F
-    const colorPresets = themeOptions?.colorPresets || C
+    const { fonts, colorPresets } = useThemeOptions()
     const { reverseLayout, isContrast, isFullScreen, themeColorPresets, themeFont, themeFontSize, themeLayout, themeMode } = settings
 
 
+    // console.log(colorPresets);
 
     const handelModeChange = () => {
         onChangeMode(themeMode === "light" ? "dark" : "light")
@@ -63,20 +62,12 @@ export default function SettingsDrawer({ open, onClose, onChangeSettings, themeO
             }}
             PaperProps={{
                 sx: {
-                    backgroundImage: `url(${defaultImages.backgrounds.deemBg1}),url(${defaultImages.backgrounds.deemBg2})`,
-                    backgroundRepeat: "no-repeat",
-                    backgroundSize: "50%, 50%",
                     padding: 0,
                     scrollbarGutter: "auto",
-                    backgroundColor: "transparent",
                     paddingRight: 0,
                     overflowY: "hidden",
-                    backgroundPositionX: "left, right",
-                    backgroundPositionY: "bottom, top",
                     width: 360,
-                    bgcolor: (theme) => alpha(theme.palette.background.default, 0.9),
-                    backdropFilter: 'blur(20px)',
-                    boxShadow: (theme) => theme.shadows[8],
+                    bgcolor: alpha(theme.palette.background.default, 0.9),
                     borderLeft: "1px thin",
                 },
             }}
@@ -109,10 +100,9 @@ export default function SettingsDrawer({ open, onClose, onChangeSettings, themeO
                     scrollbarGutter: "stable",
                     paddingRight: "0.6rem",
                     marginRight: "2px",
-                    '::-webkit-scrollbar': { width: 8, display: open ? "block" : "none" },
-                    "&::-webkit-scrollbar-thumb": { backgroundColor: "transparent" },
+                    '::-webkit-scrollbar-thumb': { backgroundColor: "transparent" },
                     "&:hover": {
-                        "&::-webkit-scrollbar-thumb": { backgroundColor: (theme) => alpha(theme.palette.grey[500], 0.39) }
+                        "&::-webkit-scrollbar-thumb": { backgroundColor: alpha(theme.palette.grey[500], 0.39) }
                     },
 
                 }}>

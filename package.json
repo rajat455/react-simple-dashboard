@@ -1,6 +1,6 @@
 {
   "name": "react-easy-dashboard",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "type": "module",
   "main": "./dist/index.mjs",
   "module": "./dist/index.mjs",
@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@iconify/react": "^6.0.2",
+    "@mui/x-data-grid": "^8.28.2",
     "framer-motion": "^12.31.1",
     "iconify-icon": "^3.0.2",
     "path": "^0.12.7"

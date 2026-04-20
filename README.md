@@ -1,162 +1,111 @@
-# react-easy-dashboard
-✨ Main Features ->
+🚀 React Easy Dashboard (Technical Documentation)
 
-Customizable Layouts: Vertical, Mini, and Horizontal layout support.
-
-Theme Presets: Multiple color presetes (Default, Cyan, Purple, Blue, Yellow, Red ,...any).
-
-Dark & Light Mode: Inbuilt mode switching support.
-
-Contrast Mode: Heigh-Contrast visual expression with Grey background.
-
-RTL Support: For right to left Layout support.
-
-TypeScript Ready: Enough Type support and Auto compliment.
-
-Responsive: Ready for mobile and desktop or any size device.
+React Easy Dashboard is a high-level UI framework built for MUI. It provides a structured way to handle complex dashboard layouts, deep-theming, and custom iconographies with zero-configuration overhead.
 
 
-📦 Installation ->
+🛠 1. Core Provider: CustomeThemeProvider
 
-Run:npm install react-simple-dashboard @mui/material @emotion/react @emotion/styled
+This is the brain of your application. It injects custom shadows, typography, and palette presets into the MUI system.
 
+Properties:
 
-🛠️ Customization (Props)
-
-ThemeProvider ->
-.-------------------------------------------------------------------.
-| Prop         | Type               | Description                   |
-|-------------------------------------------------------------------|
-| themeOptions | ThemeOption        | Options for Dashboard Visuals |  
-| settings     | SettingsValueProps | For Close Drawer.             |
-'-------------------------------------------------------------------'
-
-SettingDrawer ->
-.-----------------------------------------------------------.
-| Prop             | Type     | Description                 |             
-|------------------|----------------------------------------| 
-| open             | boolean  | is Drawer open or not.      |           
-| onClose          | function | For Close Drawer.           |    
-| onChangeSettings | function | Calls when settings change. |
-'-----------------------------------------------------------'
+Name,Type,Description
+settings,SettingsValueProps,"Controls themeMode, themeColorPresets, themeFont, etc."
+fonts,Fonts[],Array of custom font families to be injected.
+colorPresets,ColorPresets[],Array of custom primary/secondary color schemes.
 
 
-HOW TO USE IT ->
-(./App.js)
+Settings Object Definition:
 
-import { useMemo, useState } from 'react';
-import { 
-  ThemeProvider, 
-  DashboardLayout, 
-  SettingsDrawer, 
-  navConfig, 
-  fonts, 
-  colorPresets 
-} from 'react-simple-dashboard';
+TypeScript:
 
-const defaultAvatar = "your Image";
-
-function App() {
-  const [openSettings, setOpenSettings] = useState(false);
-  const settings = {
-    themeMode: "light",
-    themeColorPresets: "default",
-    themeFont: 'Public Sans',
-    themeFontSize: 17,
-    themeLayout: "vertical",
-    isContrast: false,
-    reverseLayout: false,
-    state:{} // For Access Your State With Redering Methods by Settings Argument (renderLogo, renderFooter, rednerIcons, rednerNavItems) //
-  };
-  const ThemeOptions = useMemo(() => ({
-    navigationList: [...navConfig],
-    fonts: [...fonts],
-    colorPresets: colorPresets,
-
-    renderLogo: (theme) => (
-      <svg width="40" height="40" viewBox="0 0 512 512">
-      </svg>
-    ),
-
-     renderNavItem: (item, theme, settings) => {
-        const vertical = settings.themeLayout === "vertical"
-        const mini = settings.themeLayout === "mini"
-        const horizontal = settings.themeLayout === "horizontal"
-        const { reverseLayout } = settings
-
-        return <ListItem key={item.heading} disablePadding sx={{ display: 'block', mb: 0.5 }}>
-          <ListItemButton
-            selected={item.selected}
-            sx={{
-              minHeight: horizontal ? 32 : 44,
-              borderRadius: 1,
-              display: 'flex',
-              maxWidth: "100%",
-              flexDirection: !mini ? (reverseLayout ? "row-reverse" : "row") : "column",
-              justifyContent: !mini ? (reverseLayout ? "end" : 'start') : 'center',
-              alignItems: 'center',
-              paddingY: horizontal ? 0 : 0.5,
-              gap: (!mini && !reverseLayout && !horizontal ? 0.7 : !mini && reverseLayout && !horizontal ? 1.5 : 0.7),
-              paddingLeft: !mini && !horizontal ? (reverseLayout ? 1 : 1.5) : 1,
-              paddingRight: !mini && !horizontal ? (reverseLayout ? 1.5 : 1) : 1,
-              paddingTop: horizontal ? 0 : (!mini ? 0.5 : 1)
-            }}
-          >
-            <ListItemIcon sx={{
-              minWidth: 0,
-              mr: (!mini && !horizontal && vertical) ? (!reverseLayout ? 0.8 : 0) : 0,
-              justifyContent: 'center',
-              alignItems: "center",
-              color: item.selected ? (theme.palette.mode === "light" ? "primary.main" : "primary.light") : "text.secondary",
-            }}>
-              {item.icon}
-            </ListItemIcon>
-            <ListItemText style={{ marginTop: 0, marginBottom: 3, flex: "unset" }} primary={item.heading} primaryTypographyProps={{ minWidth: "max-content", fontWeight: item.selected ? (!mini ? 600 : 700) : (!mini ? 500 : 600), color: item.selected ? (theme.palette.mode === "light" ? "primary.main" : "primary.light") : "text.secondary", sx: { lineHeight: "16px", fontSize: !mini ? theme.typography.body2.fontSize : `calc(${theme.typography.subtitle2.fontSize} - 1px)` } }} />
-          </ListItemButton>
-        </ListItem>
-      },
-
-    renderFooter: (theme) => (
-      <div style={{ textAlign: 'center', padding: '20px' }}>
-        <p>Rajat Jayswal</p>
-        <button>Sign Out</button>
-      </div>
-    ),
-
-    header: {
-      renderTitle: () => "Dashboard",
-      renderIcons: (theme, settings) => (
-        // Header's icons (Notifications, Settings,...All)
-        <button onClick={() => setOpenSettings(true)}>Settings</button>
-      )
-    }
-  }), []);
-  return (
-
-    <ThemeProvider themeOptions={ThemeOptions} settings={settings}>
-
-      <DashboardLayout themeOptions={ThemeOptions}>
-
-        <h1>Welcome to Dashboard</h1>
-
-      </DashboardLayout>
-
-      <SettingsDrawer
-
-        themeOptions={ThemeOptions}
-
-        open={openSettings}
-
-        onClose={() => setOpenSettings(false)}
-
-        onChangeSettings={(newSettings) => console.log(newSettings)}
-
-      />
-    </ThemeProvider>
-  );
+{
+  themeMode: 'light' | 'dark';
+  themeColorPresets: 'default' | 'cyan' | 'purple' | 'blue' | 'yellow' | 'red';
+  themeFont: string;
+  themeFontSize: number;
+  themeLayout: 'vertical' | 'mini' | 'horizontal';
+  isContrast: boolean;
+  isfullScreen: boolean;
 }
-export default App;
 
 
-📄 License ->
-MIT © 2026 rajat455
+🏗 2. Layout Management: DashboardLayout
+
+A pre-configured shell that handles the Sidebar, Header, and Navigation logic.
+
+Properties:
+
+Name,Type,Description
+navigationList,NavigationList[],Array of objects defining the sidebar menu items.
+onHeaderAction,(action) => void,"Event handler for header icons (e.g., toggle settings)."
+onNavigate,(item) => void,Callback triggered when a user clicks a menu item.
+
+
+🧱 3. Specialized Components
+
+WelcomeBanner
+
+A hero section component with support for background images or custom SVG components.
+
+TypeScript:
+
+<WelcomeBanner 
+  bannerHeading="Hello Rajat!" 
+  bannerSubHeading="System is operational."
+  backgroundImage={defaultImages.backgrounds.welcomeBanner1}
+  onGo={() => handleAction()}
+>
+  <WelcomeBanner.BannerAction>
+    <Button>Action</Button>
+  </WelcomeBanner.BannerAction>
+</WelcomeBanner>
+
+CustomeDataGrid
+
+A heavy-duty table wrapper for handling large datasets with custom cell rendering.
+
+Props: title, columns, InnerProps (All standard DataGridProps).
+
+AntSwitch
+
+A high-performance, styled switch component for toggling system states.
+
+Inherits: All MUI SwitchProps.
+
+
+🎨 4. Theme Schema Extensions
+
+The library extends the standard MUI Theme interface. You can access these in your custom styles:
+
+TypeScript:
+
+// Accessing Custom Shadows
+theme.shadows.card;
+theme.shadows.dialog;
+
+// Accessing Extended Palette
+theme.palette.primary.lighter;
+theme.palette.primary.darker;
+
+
+📂 5. Asset Library: defaultImages
+
+The library provides pre-bundled assets:
+
+Backgrounds: welcomeBanner1, welcomeBanner2, slide1, etc.
+
+Avatars: avatar1.
+
+SVG Components: Svg1, Svg2.
+
+
+📋 6. Full Export List (Quick Reference)
+
+The library exports over 50+ components and icons, including:
+
+Icons: AnalyticsIcon, EcommerceIcon, BankingIcon, NotificationIcon, etc.
+
+Controls: CustomeSlider, AntSwitch, SettingsDrawer.
+
+Navigation: NavVertical, Header, DashboardLayout.

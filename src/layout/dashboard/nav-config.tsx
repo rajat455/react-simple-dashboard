@@ -5,98 +5,98 @@ import { NavigationList } from "../../theme/types";
 
 export const navConfig: NavigationList[] = [
     {
-        href: "/",
+        href: "/app",
         heading: "App",
         selected: true,
         icon: <AppIcon />
     },
     {
-        href: "/",
+        href: "/ecommerce",
         heading: "Ecommerce",
         icon: <EcommerceIcon />
     },
     {
-        href: "/",
+        href: "/analytics",
         heading: "Analytics",
         icon: <AnalyticsIcon />
     },
     {
-        href: "/",
+        href: "/banking",
         heading: "Banking",
         icon: <BankingIcon />
     },
     {
-        href: "/",
+        href: "/booking",
         heading: "Booking",
         icon: <BookingIcon />
     },
     {
-        href: "/",
+        href: "/file",
         heading: "File",
         icon: <FileIcon />
     },
     {
-        href: "/",
+        href: "/course",
         heading: "Course",
         icon: <CourseIcon />
     },
     {
-        href: "/",
+        href: "/user",
         heading: "User",
         icon: <UserIcon />
     },
     {
-        href: "/",
+        href: "/product",
         heading: "Product",
         icon: <ProductIcon />
     },
     {
-        href: "/",
+        href: "/order",
         heading: "Order",
         icon: <OrderIcon />
     },
     {
-        href: "/",
+        href: "/invoice",
         heading: "Invoice",
         icon: <InvoiceIcon />
     },
     {
-        href: "/",
+        href: "/blog",
         heading: "Blog",
         icon: <BlogIcon />
     },
     {
-        href: "/",
+        href: "/job",
         heading: "Job",
         icon: <JobIcon />
     },
     {
-        href: "/",
+        href: "/tour",
         heading: "Tour",
         icon: <TourIcon />
     },
     {
-        href: "/",
+        href: "/file_manager",
         heading: "File manager",
         icon: <FileManagerIcon />
     },
     {
-        href: "/",
+        href: "/mail",
         heading: "Mail",
         icon: <MailIcon />
     },
     {
-        href: "/",
+        href: "/chat",
         heading: "Chat",
         icon: <ChatIcon />
     },
     {
-        href: "/",
+        href: "/calendar",
         heading: "Calendar",
         icon: <CalendarIcon />
     },
     {
-        href: "/",
+        href: "/permission",
         heading: "Permission",
         icon: <PermissionIcon />
     },

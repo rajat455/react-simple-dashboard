@@ -56,7 +56,7 @@ export default function CustomeSlider({ onChange, marks, min, max, value, ...oth
             },
             '& .MuiSlider-valueLabel': {
                 lineHeight: 1.2,
-                color: (theme) => theme.palette.common.white,
+                color: (theme) => (theme as any).palette.common?.white,
                 fontSize: (theme) => theme.typography.caption.fontSize,
                 background: (theme) => theme.palette.mode === "light" ? theme.palette.grey[800] : theme.palette.grey[700],
                 width: (theme) => (`calc(${theme.typography.caption.fontSize} * 3)`),

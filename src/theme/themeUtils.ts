@@ -1,5 +1,5 @@
 import { alpha } from "@mui/material";
-import { ColorPreset, ThemeMode } from "./types";
+import { ColorPreset, ColorPresets, Fonts, ThemeMode } from "./types";
 
 
 // PRESETS SECTION 
@@ -23,16 +23,6 @@ export const commonWhite = "#FFFFFF"
 export const commonBlack = "#000000"
 
 
-export interface ColorPresets {
-    main: string;
-    name: ColorPreset;
-    light: string;
-    dark: string;
-    lighter: string;
-    contrastText: string;
-    darker: string;
-}
-
 export const colorPresets: ColorPresets[] = [
     { name: 'default', main: '#00A76F', light: "#5BE49B", dark: "#007867", lighter: "#C8FAD6", contrastText: "#FFFFFF", darker: "#004B50" },
     { name: 'cyan', main: '#078DEE', light: "#68CDF9", dark: "#0351AB", lighter: "#CCF4FE", darker: "#012972", contrastText: "#FFFFFF" },
@@ -52,8 +42,8 @@ export const getPalette = (colorPresets: ColorPresets[], themeMode: ThemeMode, t
             main: themeMode === "light" ? paletteGray[800] : commonWhite,
             contrastText: themeMode === "light" ? commonWhite : paletteGray[800],
             light: commonWhite,
-            lighter: commonWhite,
-            dark: commonBlack,
+            lighter: themeMode === "light" ? commonWhite : paletteGray[800],
+            dark: themeMode === "dark" ? paletteGray[400] : paletteGray[700],
             darker: commonBlack,
         },
         info: {
@@ -99,7 +89,7 @@ export const getPalette = (colorPresets: ColorPresets[], themeMode: ThemeMode, t
         },
         action: {
             active: paletteGray[500],
-            hover: alpha(paletteGray[500], 0.16),
+            hover: alpha(paletteGray[500], 0.08),
             selected: alpha(paletteGray[500], 0.16),
             focus: alpha(paletteGray[600], 0.24),
             disabledBackground: alpha(paletteGray[600], 0.24),
@@ -243,11 +233,6 @@ export const getCustomShadows = (palette: any) => {
 }
 
 //FONT SECTION
-export interface Fonts {
-    name: string;
-    main: string;
-}
-
 export const fonts: Fonts[] = [
     { name: 'Public Sans', main: 'Public Sans, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"' },
     { name: 'Inter Variable', main: '"Inter", sans-serif' },

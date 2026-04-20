@@ -1,12 +1,13 @@
 import React from "react";
-import { createTheme, ThemeProvider, StyledEngineProvider, alpha, CssBaseline, Palette, Shape, Theme } from "@mui/material";
-import { getTypography, getPalette, getCustomShadows, fonts as F, colorPresets as C, ColorPresets } from "./themeUtils";
+import { createTheme, ThemeProvider, StyledEngineProvider, alpha, CssBaseline, Palette, Shape, Theme, colors } from "@mui/material";
+import { getTypography, getPalette, getCustomShadows } from "./themeUtils";
 import { useSettings } from "../context/settingContext";
-import { ThemeMode, ThemeOptions } from "./types";
+import { ColorPresets, ThemeMode } from "./types";
+import { defaultImages } from "./images";
+import { useThemeOptions } from ".";
 
 interface Props {
     children: React.ReactNode;
-    themeOptions: ThemeOptions;
 };
 
 
@@ -37,18 +38,15 @@ declare module '@mui/material' {
             text: { primary: string, secondary: string, disabled: string };
             grey: any;
             divider: any;
-
-
         },
         shape: Shape;
         spcing: number;
     }
 }
 
-export default function CustomeThemeProvider({ children, themeOptions }: Props) {
+export default function CustomeThemeProvider({ children }: Props) {
     const { settings } = useSettings()
-    const fonts = themeOptions?.fonts || F
-    const colorPresets = themeOptions?.colorPresets || C
+    const { fonts, colorPresets } = useThemeOptions()
     const { themeMode, themeColorPresets, themeFontSize, themeFont, isContrast } = settings;
     let fontFamily = fonts.find((x) => x.name === themeFont) || fonts[0]
     const palette = getPalette(colorPresets, themeMode, themeColorPresets, isContrast);
@@ -67,23 +65,82 @@ export default function CustomeThemeProvider({ children, themeOptions }: Props) 
             MuiCssBaseline: {
                 styleOverrides: {
                     '*': { boxSizing: 'border-box', margin: 0, padding: 0 },
-                    // html: { WebkitOverflowScrolling: 'touch', },
+                    "html,body": {
+                        WebkitOverflowScrolling: 'touch'
+                    },
                     '::-webkit-scrollbar': {
-                        scrollWidth: "8px",
+                        width: "6px !important",
+                        height: "6px !important",
+                        display: "block !important"
                     },
                     '::-webkit-scrollbar-track': { backgroundColor: 'transparent !important', background: 'transparent !important' },
-                    // '&& html::-webkit-scrollbar-track': { backgroundColor: 'transparent !important', background: 'transparent !important' },
                     '::-webkit-scrollbar-thumb': {
                         backgroundColor: alpha(theme.palette.grey[500], 0.39),
-                        innerWidth: 10,
-                        borderRadius: 10,
+                        borderRadius: "10px",
                     },
                 },
+            },
+            MuiBackdrop: {
+                styleOverrides: {
+                    root: {
+                        backgroundColor: alpha(theme.palette.grey[900], 0.8),
+                        backdropFilter: 'blur(4px)',
+                        WebkitBackdropFilter: 'blur(4px)',
+                        '&.MuiBackdrop-invisible': {
+                            background: 'transparent',
+                            backdropFilter: 'none',
+                        },
+                    },
+                },
+            },
+            MuiDialog: {
+                styleOverrides: {
+                    paper: {
+                        boxShadow: customShadows.dialog,
+                        borderRadius: (theme.shape.borderRadius as any) * 2,
+                        backgroundColor: "transparent",
+                        borderColor: theme.palette.divider,
+                        backgroundImage: `url(${defaultImages.backgrounds.deemBg1}),url(${defaultImages.backgrounds.deemBg2})`,
+                        backgroundRepeat: "no-repeat",
+                        backgroundSize: "50%, 50%",
+                        backgroundPositionX: "left, right",
+                        backgroundPositionY: "bottom, top",
+                        bgcolor: alpha(theme.palette.background.default, 0.9),
+                        backdropFilter: 'blur(20px)',
+
+                    }
+                }
+            },
+            MuiPopover: {
+                styleOverrides: {
+                    paper: {
+                        boxShadow: customShadows.dropdown,
+                        borderRadius: (theme.shape.borderRadius as any) * 1.5,
+                        backgroundColor: "transparent",
+                        borderColor: theme.palette.divider,
+                        backgroundImage: `url(${defaultImages.backgrounds.deemBg1}),url(${defaultImages.backgrounds.deemBg2})`,
+                        backgroundRepeat: "no-repeat",
+                        backgroundSize: "50%, 50%",
+                        backgroundPositionX: "left, right",
+                        backgroundPositionY: "bottom, top",
+                        bgcolor: alpha(theme.palette.background.default, 0.9),
+                        backdropFilter: 'blur(20px)',
+                    }
+                }
             },
             MuiDrawer: {
                 styleOverrides: {
                     paper: {
-                        borderColor: theme.palette.divider
+                        boxShadow: theme.shadows[8],
+                        backgroundColor: "transparent",
+                        borderColor: theme.palette.divider,
+                        backgroundImage: `url(${defaultImages.backgrounds.deemBg1}),url(${defaultImages.backgrounds.deemBg2})`,
+                        backgroundRepeat: "no-repeat",
+                        backgroundSize: "50%, 50%",
+                        backgroundPositionX: "left, right",
+                        backgroundPositionY: "bottom, top",
+                        bgcolor: alpha(theme.palette.background.default, 0.9),
+                        backdropFilter: 'blur(20px)',
                     }
                 }
             },
@@ -106,7 +163,7 @@ export default function CustomeThemeProvider({ children, themeOptions }: Props) 
             MuiButton: {
                 styleOverrides: {
                     root: {
-                        borderRadius: ((theme.shape.borderRadius as any) * 2) +"px",
+                        borderRadius: `${(theme.shape.borderRadius as any) * 2}` + "px",
                         fontWeight: 700,
                         textTransform: 'capitalize',
                     },
@@ -115,7 +172,8 @@ export default function CustomeThemeProvider({ children, themeOptions }: Props) 
                     },
                     contained: {
                         border: `1px solid ${theme.palette.divider}`,
-                    }
+                    },
+
                 }
             },
             MuiCard: {

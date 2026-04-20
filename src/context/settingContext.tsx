@@ -10,7 +10,6 @@ const initialState: SettingsValueProps = {
     themeLayout: "vertical",
     isContrast: false,
     reverseLayout: false,
-    state: {},
     isFullScreen: document.fullscreenElement ? true : false,
 }
 
@@ -22,7 +21,6 @@ const SettingsContext = createContext({
     onResizeFont: (_fontSize: number) => { },
     onChangeFont: (_fontName: string) => { },
     onResetSettings: (_oldSettings?: SettingsValueProps) => { },
-    onChangeState: (_newState: any) => { },
     toggleContrast: () => { },
     toggleReverseLayout: () => { },
     toggleFullScreen: () => { },
@@ -35,11 +33,9 @@ export const SettingsProvider = ({ children, defaultSettings }: { children: Reac
     const onChangeMode = useCallback((mode: ThemeMode) => {
         setSettings((prev) => ({ ...prev, themeMode: mode }))
     }, [])
-
     const onChangeColor = useCallback((color: any) => {
         setSettings((prev) => ({ ...prev, themeColorPresets: color }))
     }, [])
-
     const onResizeFont = useCallback((fontSize: number) => {
         setSettings((prev) => ({ ...prev, themeFontSize: fontSize }))
     }, [])
@@ -68,18 +64,15 @@ export const SettingsProvider = ({ children, defaultSettings }: { children: Reac
             console.error(error?.message)
         }
     }, [settings])
-    const onChangeState = useCallback((newState: any) => {
-        setSettings((prev) => ({ ...prev, state: {...newState} }))
-    }, [])
     const onResetSettings = useCallback(async (oldSettings?: SettingsValueProps) => {
         if (settings.isFullScreen) await toggleFullScreen()
 
         setSettings({ ...initialState, ...defaultSettings, ...oldSettings })
     }, [settings])
 
+   
 
-
-    return <SettingsContext.Provider value={{ settings, onChangeState, toggleFullScreen, toggleReverseLayout, toggleContrast, onChangeFont, onChangeLayout, onResizeFont, onChangeMode, onChangeColor, onResetSettings }} >
+    return <SettingsContext.Provider value={{ settings, toggleFullScreen, toggleReverseLayout, toggleContrast, onChangeFont, onChangeLayout, onResizeFont, onChangeMode, onChangeColor, onResetSettings }} >
         {children}
     </SettingsContext.Provider>
 }
